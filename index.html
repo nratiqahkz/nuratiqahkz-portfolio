@@ -1,237 +1,1358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nur Atiqah Kamaruzzaman — Interactive Media & Software</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-:root{--paper:#f1ede4;--ink:#141412;--acc:#e8321c;--mute:#6b665c;--line:#14141233;
---serif:"Instrument Serif",Georgia,serif;--sans:"Archivo",Helvetica,Arial,sans-serif;
---pad:clamp(16px,3vw,40px);--ease:cubic-bezier(.2,.7,.2,1);--t:.35s;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#151513;--ink:#efeadf;--acc:#ff5a40;--mute:#a09a8d;--line:#efeadf33}}
-:root[data-theme="dark"]{--paper:#151513;--ink:#efeadf;--acc:#ff5a40;--mute:#a09a8d;--line:#efeadf33}
-*{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth;scroll-padding-top:64px}
-body{background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--sans);overflow-x:hidden}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
-.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--acc);color:#fff;padding:8px;z-index:99}
-.meta{font:600 11px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase}
-header{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:6px var(--pad);background:var(--paper);border-bottom:1px solid var(--line)}
-header nav{display:flex;gap:2px;flex-wrap:wrap}
-header a{text-decoration:none;padding:10px;min-height:44px;display:inline-flex;align-items:center}
-header a:hover{color:var(--acc)}
-section{padding:clamp(48px,8vw,110px) var(--pad);border-bottom:1px solid var(--line);position:relative}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.reveal.in,.nojs .reveal{opacity:1;transform:none}
-#hero{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding-top:28px;min-height:calc(100svh - 56px);align-content:start}
-.h-top{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.h-name{grid-column:1/-1;font:400 clamp(72px,19vw,300px)/.82 var(--serif);letter-spacing:-.04em;margin:10px 0 0 -.04em}
-.h-name span{display:block}
-.h-name .o{-webkit-text-stroke:2px var(--ink);color:transparent;font-style:italic;margin-left:8vw}
-.h-intro{grid-column:1/span 5;align-self:end;font:400 clamp(20px,2.4vw,32px)/1.15 var(--serif)}
-.h-intro em{color:var(--acc)}
-.h-tiles{grid-column:7/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-self:end}
-.h-tiles .tile:nth-child(2){margin-top:28px}.h-tiles .tile:nth-child(3){margin-top:-14px}
-.tile{aspect-ratio:3/4;overflow:hidden;border:0;padding:0;cursor:pointer;background:none;display:block;width:100%}
-.reg{position:absolute;right:var(--pad);top:70px;width:34px;height:34px;border:1px solid var(--ink);border-radius:50%;pointer-events:none}
-.reg:before,.reg:after{content:"";position:absolute;background:var(--ink)}.reg:before{left:50%;top:-8px;bottom:-8px;width:1px}.reg:after{top:50%;left:-8px;right:-8px;height:1px}
-.egg{background:none;border:0;color:var(--acc);font:inherit;cursor:pointer;text-decoration:underline;padding:10px 0;min-height:44px}
-.art{position:relative;width:100%;height:100%;overflow:hidden;background:var(--c);display:flex;flex-direction:column;justify-content:space-between;padding:10px;color:#141412;transition:transform var(--t) var(--ease)}
-.art b{position:relative;font:400 clamp(36px,6vw,88px)/.85 var(--serif);font-style:italic;letter-spacing:-.03em;transition:transform var(--t) var(--ease)}
-.art small{position:relative;font:600 9px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;opacity:.75}
-.art:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 10px,#14141214 10px 11px)}
-.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:28px}
-h2{font:400 clamp(44px,9vw,140px)/.9 var(--serif);letter-spacing:-.03em}
-h2 i{color:var(--acc)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.filters button{font:600 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:0 16px;min-height:44px;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;border-radius:99px;transition:background var(--t),color var(--t)}
-.filters button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px 16px;list-style:none;padding:0}
-.grid li{grid-column:span 4}
-.grid li:nth-child(5n+1){grid-column:span 7}.grid li:nth-child(5n+2){grid-column:span 5;margin-top:60px}
-.grid li.hide{display:none}
-.grid li.fade{animation:up .4s var(--ease)}
-.card{display:block;width:100%;background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer}
-.card .frame{aspect-ratio:4/3;overflow:hidden;border:1px solid var(--ink)}
-.card:hover .art,.card:focus-visible .art{transform:scale(1.06) rotate(-.6deg)}
-.card:hover .art b,.card:focus-visible .art b{transform:translateX(8px)}
-.cap{display:flex;justify-content:space-between;gap:10px;padding-top:10px;align-items:baseline}
-.cap h3{font:400 28px/1 var(--serif)}
-.no{color:var(--acc)}
-dialog{border:0;padding:0;background:var(--paper);color:var(--ink);width:100%;max-width:100%;height:100%;max-height:100%;margin:0;overflow:auto}
-dialog::backdrop{background:#000a}
-dialog[open]{animation:up .45s var(--ease)}
-@keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
-.p-bar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px var(--pad);background:var(--paper);border-bottom:1px solid var(--line);z-index:2;flex-wrap:wrap}
-.p-bar button{font:600 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;min-height:44px;min-width:44px;padding:0 14px;background:none;border:1px solid var(--ink);color:var(--ink);cursor:pointer;border-radius:99px}
-.p-bar button:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
-.p-body{padding:var(--pad);display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
-.p-body h2{grid-column:1/-1;font-size:clamp(48px,11vw,170px)}
-.p-big{grid-column:1/span 8;aspect-ratio:16/10;border:1px solid var(--ink)}
-.p-side{grid-column:9/-1;align-self:end}
-.p-two{grid-column:1/-1;display:grid;grid-template-columns:5fr 7fr;gap:20px}
-.p-two>div{aspect-ratio:4/3;border:1px solid var(--ink)}.p-two>div:first-child{aspect-ratio:3/4;margin-top:40px}
-.p-txt{grid-column:3/span 7;font:400 clamp(22px,2.6vw,34px)/1.2 var(--serif)}
-dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:10px}dt{color:var(--mute)}
-.btn{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;padding:0 18px;border:1px solid var(--ink);border-radius:99px;text-decoration:none;font-weight:600}
-.btn:hover{background:var(--acc);border-color:var(--acc);color:#fff}
-.about{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
-.about h2{grid-column:1/-1}
-.about p.lead{grid-column:1/span 6;font:400 clamp(22px,2.6vw,34px)/1.2 var(--serif)}
-.skills{grid-column:8/-1;align-self:start}
-.skills ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.skills li{border:1px solid var(--ink);padding:6px 12px;border-radius:99px}
-.tl{list-style:none;padding:0;margin:14px 0 0;border-top:1px solid var(--ink)}
-.tl li{display:grid;grid-template-columns:170px 1fr 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.tl h3{font:400 clamp(24px,3vw,38px)/1 var(--serif)}
-.tl .when{color:var(--acc)}
-.tl p{color:var(--mute)}
-#play{background:var(--ink);color:var(--paper)}
-#play h2 i{color:var(--acc)}
-.board{position:relative;height:clamp(320px,50vw,460px);border:1px dashed var(--paper);margin-top:20px;overflow:hidden}
-.note{position:absolute;max-width:min(230px,70%);padding:14px;background:var(--paper);color:#141412;font:400 24px/1.05 var(--serif);cursor:grab;border:0;text-align:left;user-select:none;touch-action:none}
-.note small{display:block;font:600 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#b3200d;margin-bottom:6px}
-.note.hot{background:var(--acc);color:#141412}.note.hot small{color:#141412}
-.note:active{cursor:grabbing}
-#contact{min-height:80svh;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
-.big{font:400 clamp(54px,14vw,230px)/.85 var(--serif);letter-spacing:-.04em}
-.big a{text-decoration:none;color:var(--acc);font-style:italic;display:inline-block;border-bottom:.04em solid currentColor}
-.big a:hover{color:var(--ink)}
-.links{display:flex;gap:8px 24px;flex-wrap:wrap}
-.links a,.links span{padding:10px 0}
-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:20px var(--pad);color:var(--mute)}
-footer a{text-decoration:none;padding:10px 4px}
-#cur{position:fixed;left:0;top:0;z-index:100;pointer-events:none;background:var(--acc);color:#141412;font:600 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:99px;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s;white-space:nowrap}
-@media (hover:hover) and (pointer:fine){.card,.tile{cursor:none}}
-@media (max-width:820px){
-#hero{display:flex;flex-direction:column;gap:16px}.h-name{font-size:21vw}.h-name .o{margin-left:0}.reg{display:none}
-.grid li,.grid li:nth-child(5n+1),.grid li:nth-child(5n+2){grid-column:1/-1;margin-top:0}
-.p-body{display:flex;flex-direction:column}.p-two{grid-template-columns:1fr}.p-two>div:first-child{margin-top:0}
-.about{display:flex;flex-direction:column}
-.tl li{grid-template-columns:1fr;gap:4px}
-}
-@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nur Atiqah Kamaruzzaman — Interactive Media & Creative Developer</title>
+
+    <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Three.js CDN for Interactive 3D Canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        pearl: {
+                            50: '#FBF9F6',
+                            100: '#F6F4F0',
+                            200: '#ECE8E1',
+                            300: '#DFD9CD',
+                        },
+                        lavender: {
+                            100: '#EAE8FA',
+                            200: '#D8D5F2',
+                            300: '#C4C0EC',
+                            400: '#A49CE0',
+                            500: '#8E85E0',
+                        },
+                        blush: {
+                            100: '#FBF0F3',
+                            200: '#F4E3E8',
+                            300: '#E8C8D5',
+                        },
+                        charcoal: {
+                            800: '#2A2A30',
+                            900: '#1A1A1E',
+                        },
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(2deg)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4 },
+                            '50%': { opacity: 0.8 },
+                        }
+                    },
+                    animation: {
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'shimmer': 'shimmer 4s linear infinite',
+                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-primary: #FBF9F6;
+            --bg-secondary: #F6F4F0;
+            --text-primary: #1A1A1E;
+            --text-muted: #5A5A66;
+            --accent-lavender: #C4C0EC;
+            --accent-blush: #F4E3E8;
+            --border-color: rgba(26, 26, 30, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+        }
+
+        .dark-theme {
+            --bg-primary: #121216;
+            --bg-secondary: #1A1A20;
+            --text-primary: #F4F4F8;
+            --text-muted: #9E9EB0;
+            --accent-lavender: #8E85E0;
+            --accent-blush: #734857;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(26, 26, 32, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(26, 26, 30, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(26, 26, 30, 0.03) 1px, transparent 1px);
+        }
+
+        .dark-theme .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        .iridescent-border {
+            position: relative;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+        }
+
+        .iridescent-border::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(120deg, rgba(196,192,236,0.6), rgba(244,227,232,0.4), rgba(226,232,240,0.8), rgba(196,192,236,0.6));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .iridescent-border:hover::before {
+            opacity: 1;
+        }
+
+        #custom-cursor-dot, #custom-cursor-ring {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            border-radius: 50%;
+            transition: transform 0.1s ease-out, opacity 0.2s ease;
+        }
+
+        #custom-cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: #8E85E0;
+        }
+
+        #custom-cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(142, 133, 224, 0.5);
+            backdrop-filter: blur(1px);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            a, button, input, select, [role="button"], .interactive-hover {
+                cursor: pointer;
+            }
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .title-display {
+            font-size: clamp(2.5rem, 6vw + 1rem, 6.5rem);
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+        }
+
+        .case-modal-blur {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
 </head>
-<body class="nojs">
-<a class="skip" href="#archive">Skip to projects</a>
-<header>
-  <a href="#hero" class="meta" aria-label="Home">N.A.K. ✳ Issue 01</a>
-  <nav class="meta" aria-label="Sections"><a href="#archive">Work</a><a href="#about">About</a><a href="#path">Path</a><a href="#play">Pinboard</a><a href="#contact">Contact</a></nav>
-</header>
-<main>
-<section id="hero" aria-label="Introduction">
-  <div class="h-top meta"><span>Portfolio — Issue 01 / 2026</span><span>Klang, Selangor · MY</span><span>Now: BCS Interactive Media, UTeM</span></div>
-  <span class="reg" aria-hidden="true"></span>
-  <h1 class="h-name reveal" aria-label="Atiqah Kamaruzzaman"><span>Atiqah</span><span class="o">Kamaruzzaman</span></h1>
-  <p class="h-intro reveal">Nur Atiqah — an interactive media student who builds things you can <em>wave at</em>, tap and play, and tests software so it holds up.<br><button class="egg" id="egg" type="button">Wave at me ↗</button> <span id="eggout" class="meta" aria-live="polite"></span></p>
-  <div class="h-tiles" id="heroTiles"></div>
-</section>
+<body class="bg-grid-pattern selection:bg-lavender-200 selection:text-charcoal-900 min-h-screen flex flex-col font-sans antialiased">
 
-<section id="archive" aria-labelledby="ah">
-  <div class="sec-h"><h2 id="ah">The <i>archive</i></h2><p class="meta"><span id="count"></span> projects · Diploma work, 2021–2023</p></div>
-  <div class="filters" role="group" aria-label="Filter projects by discipline" id="filters"></div>
-  <ul class="grid" id="grid"></ul>
-</section>
+    <div id="custom-cursor-dot" class="hidden md:block"></div>
+    <div id="custom-cursor-ring" class="hidden md:block"></div>
 
-<section id="about" aria-labelledby="abh"><div class="about">
-  <h2 id="abh" class="reveal">About, <i>briefly</i></h2>
-  <p class="lead reveal">I started in IT — programming, databases, systems analysis — and moved toward interactive media, where what I build is also what people feel. My diploma final-year project, Handal VR, brought hand gestures into a Unity experience and won gold.</p>
-  <div class="skills reveal"><p class="meta">Tools & stack (from my projects)</p>
-    <ul><li>Unity</li><li>Adobe Illustrator</li><li>HTML / CSS / JavaScript</li><li>PHP</li><li>Python</li><li>Java</li><li>Android Studio</li><li>Bootstrap</li><li>Software testing</li></ul>
-    <p class="meta" style="margin-top:22px">Recognition</p>
-    <ul><li>Dean’s List, 4 semesters</li><li>Gold · FIRA Malaysia Cup, Aibot</li><li>Gold · National Research Seminar Innovation Competition</li></ul>
-  </div>
-</div></section>
+    <header class="fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300 backdrop-blur-md bg-pearl-50/80 dark:bg-charcoal-900/80 border-b border-charcoal-900/5 dark:border-white/5" id="main-header">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-lavender-300 via-blush-200 to-white flex items-center justify-center shadow-sm border border-white/60 group-hover:scale-105 transition-transform">
+                    <span class="font-mono text-xs font-semibold tracking-tighter text-charcoal-900">NA</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif italic font-medium tracking-wide text-lg text-charcoal-900 dark:text-white leading-none">Nur Atiqah</span>
+                    <span class="font-mono text-[9px] uppercase tracking-widest text-charcoal-800/60 dark:text-gray-400 mt-1">Interactive Developer</span>
+                </div>
+            </a>
 
-<section id="path" aria-labelledby="ph">
-  <div class="sec-h"><h2 id="ph">The <i>path</i></h2><p class="meta">Experience & education</p></div>
-  <p class="meta">Experience</p>
-  <ol class="tl">
-    <li><span class="when meta">Aug – Sep 2026</span><div><h3>Crew Event</h3><p>AY Global Ventures · Part-time · Klang, Selangor · On-site</p></div><p></p></li>
-    <li><span class="when meta">Jan 2024 – Sep 2025</span><div><h3>Software Tester</h3><p>Bugz Studio Sdn Bhd · Full-time · On-site</p></div><p>Software testing and the testing process.</p></li>
-    <li><span class="when meta">Jan – Jun 2022</span><div><h3>Frontend Developer</h3><p>CARA COM MY SDN BHD · Internship · On-site</p></div><p>Worked with UI/UX designers to turn wireframes and mockups into responsive Bootstrap pages; tested web and mobile apps manually.</p></li>
-  </ol>
-  <p class="meta" style="margin-top:36px">Education</p>
-  <ol class="tl">
-    <li><span class="when meta">Sep 2025 – Sep 2027</span><div><h3>Universiti Teknikal Malaysia Melaka</h3><p>Bachelor Degree of Computer Science, Interactive Media</p></div><p>Current.</p></li>
-    <li><span class="when meta">Mar 2021 – Jun 2023</span><div><h3>Politeknik Sultan Idris Shah</h3><p>Diploma of Education, Information Technology</p></div><p>Grade: 3.99.</p></li>
-  </ol>
-</section>
+            <nav class="hidden md:flex items-center gap-6 px-6 py-2 rounded-full iridescent-border text-xs font-mono tracking-wider uppercase">
+                <a href="#about" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">01 // About</a>
+                <a href="#projects" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">02 // Projects</a>
+                <a href="#timeline" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">03 // Timeline</a>
+                <a href="#lab" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">04 // Lab</a>
+                <a href="#contact" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">05 // Contact</a>
+            </nav>
 
-<section id="play" aria-labelledby="plh">
-  <div class="sec-h"><h2 id="plh">The <i>pinboard</i></h2><p class="meta">Drag a note — or focus it and use arrow keys</p></div>
-  <div class="board" id="board" role="group" aria-label="Pinboard of draggable notes"></div>
-</section>
+            <div class="flex items-center gap-3">
+                <button id="theme-toggle" class="w-9 h-9 rounded-full iridescent-border flex items-center justify-center text-xs font-mono hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors" title="Toggle Theme Palette" aria-label="Toggle Theme">
+                    <span id="theme-icon">✦</span>
+                </button>
 
-<section id="contact" aria-labelledby="ch">
-  <p class="meta">Last page · Colophon</p>
-  <h2 id="ch" class="big">Let’s make<br>something <a href="mailto:nuratiqahkzaman@gmail.com">together</a>.</h2>
-  <div class="links meta">
-    <a href="mailto:nuratiqahkzaman@gmail.com">nuratiqahkzaman@gmail.com</a>
-    <a href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener">LinkedIn ↗</a>
-    <a href="https://atiqahportfolio.my.canva.site/" target="_blank" rel="noopener">Earlier portfolio ↗</a>
-    <span>Klang, Selangor</span>
-  </div>
-</section>
-</main>
-<footer class="meta"><nav aria-label="Footer"><a href="#archive">Work</a><a href="#about">About</a><a href="#path">Path</a><a href="#hero">Top ↑</a></nav><span>© 2026 Nur Atiqah Kamaruzzaman</span></footer>
+                <a href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono bg-charcoal-900 text-pearl-50 hover:bg-lavender-500 transition-all shadow-sm">
+                    <span>LinkedIn</span>
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </header>
 
-<dialog id="dlg" aria-label="Project details"></dialog>
-<div id="cur" aria-hidden="true">View project</div>
+    <section id="hero" class="relative min-h-screen pt-32 pb-16 px-6 flex flex-col justify-between max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between text-xs font-mono text-charcoal-800/60 dark:text-gray-400 gap-4 mb-6">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>LOC: 03.15°N, 101.44°E // SELANGOR, MY</span>
+            </div>
+            <div class="px-3 py-1 rounded-full iridescent-border text-[10px] uppercase tracking-wider">
+                [ STATUS: AVAILABLE FOR CREATIVE COLLABORATION ]
+            </div>
+            <div>
+                <span>SOFT FUTURISM // PORTFOLIO 2026</span>
+            </div>
+        </div>
 
-<script>
-const P=[
-{id:"handal",t:"Handal VR",sub:"Interaction with Hand Gestures",cat:"Games & XR",stack:"Unity",c:"#e8321c",fyp:1,txt:"My diploma final-year project: a VR experience controlled with hand gestures. It won a gold medal at the National Research Seminar Innovation Competition.",link:["https://youtu.be/I_08JeYa7_c?feature=shared","Watch the video on YouTube"]},
-{id:"nature",t:"Guess The Nature",sub:"Game",cat:"Games & XR",stack:"Unity, Adobe Illustrator",c:"#b9d36a",txt:"A game built in Unity with artwork made in Adobe Illustrator."},
-{id:"holiday",t:"Best Holiday Destination",sub:"Website",cat:"Web",stack:"HTML, CSS, JavaScript",c:"#f2c14e",txt:"A front-end website project built with HTML, CSS and JavaScript."},
-{id:"vacc",t:"Registration Vaccination",sub:"Web system",cat:"Web",stack:"HTML, CSS, PHP",c:"#9cc3d5",txt:"A registration system for vaccination, built with HTML, CSS and PHP."},
-{id:"college",t:"Residential College Student Info",sub:"Mobile app",cat:"Apps",stack:"Android Studio",c:"#d9a5c1",txt:"An Android app for residential college student information."},
-{id:"rental",t:"Car Rental Management",sub:"Desktop app",cat:"Apps",stack:"Java",c:"#cfc7b6",txt:"A car rental management application written in Java."},
-{id:"tuition",t:"Tuition Registration",sub:"Application",cat:"Apps",stack:"Python",c:"#f0a58f",txt:"A tuition registration application written in Python."}];
-const $=s=>document.querySelector(s);
-const art=(p,lbl)=>`<div class="art" style="--c:${p.c}" role="img" aria-label="Placeholder artwork for ${p.t}. Replace with the real screenshot."><small>${p.cat} — ${p.stack}</small><b>${lbl||p.t.split(" ")[0]}</b><small>Placeholder · replace with real screenshot</small></div>`;
-$("#heroTiles").innerHTML=P.slice(0,3).map(p=>`<button class="tile" data-id="${p.id}" aria-label="Open ${p.t}">${art(p)}</button>`).join("");
-const cats=["All",...new Set(P.map(p=>p.cat))];
-$("#filters").innerHTML=cats.map((c,i)=>`<button type="button" aria-pressed="${i==0}" data-c="${c}">${c}</button>`).join("");
-$("#grid").innerHTML=P.map((p,i)=>`<li data-cat="${p.cat}"><button class="card" data-id="${p.id}" aria-label="Open case study: ${p.t}"><div class="frame">${art(p)}</div><div class="cap"><h3><span class="no">${String(i+1).padStart(2,"0")}</span> ${p.t}</h3><span class="meta">${p.cat}</span></div></button></li>`).join("");
-function filter(c){let n=0;document.querySelectorAll("#grid li").forEach(li=>{const s=c=="All"||li.dataset.cat==c;li.classList.toggle("hide",!s);if(s){n++;li.classList.remove("fade");void li.offsetWidth;li.classList.add("fade")}});
- document.querySelectorAll("#filters button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c==c));$("#count").textContent=n}
-$("#filters").onclick=e=>{const b=e.target.closest("button");if(b)filter(b.dataset.c)};filter("All");
-const dlg=$("#dlg");let cur=0,opener=null;
-function open(id,from){const p=P.find(x=>x.id==id);cur=id;if(from)opener=from;
- dlg.innerHTML=`<div class="p-bar"><button id="back">← Archive</button><span class="meta">${p.cat}</span><span><button id="prev" aria-label="Previous project">←</button> <button id="next" aria-label="Next project">→</button></span></div>
- <article class="p-body"><h2>${p.t}</h2><div class="p-big">${art(p)}</div>
- <div class="p-side"><p class="meta">${p.sub}</p><dl class="meta"><dt>Category</dt><dd>${p.cat}</dd><dt>Made with</dt><dd>${p.stack}</dd><dt>Period</dt><dd>Diploma, 2021–2023</dd>${p.fyp?"<dt>Type</dt><dd>Final-year project</dd><dt>Award</dt><dd>Gold, National Research Seminar Innovation Competition</dd>":""}</dl>${p.link?`<a class="btn" href="${p.link[0]}" target="_blank" rel="noopener">${p.link[1]} ↗</a>`:""}</div>
- <p class="p-txt">${p.txt}</p>
- <div class="p-two"><div>${art({...p,c:"#d8d2c4"},"Detail")}</div><div>${art({...p,c:"#c4bdad"},"Detail")}</div></div></article>`;
- $("#back").onclick=()=>dlg.close();$("#prev").onclick=()=>nav(-1);$("#next").onclick=()=>nav(1);
- if(!dlg.open)dlg.showModal();dlg.scrollTop=0;$("#back").focus()}
-function nav(d){const v=P.map(p=>p.id);open(v[(v.indexOf(cur)+d+v.length)%v.length])}
-dlg.addEventListener("close",()=>{opener&&opener.focus()});
-dlg.addEventListener("keydown",e=>{if(e.key=="ArrowRight")nav(1);if(e.key=="ArrowLeft")nav(-1)});
-document.addEventListener("click",e=>{const b=e.target.closest(".card,.tile");if(b)open(b.dataset.id,b)});
-const cu=$("#cur");
-if(matchMedia("(hover:hover) and (pointer:fine)").matches)addEventListener("mousemove",e=>{cu.style.left=e.clientX+"px";cu.style.top=e.clientY+"px";cu.style.opacity=e.target.closest&&e.target.closest(".card,.tile")&&!dlg.open?1:0});
-const io="IntersectionObserver"in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15}):null;
-document.body.classList.remove("nojs");
-document.querySelectorAll(".reveal").forEach(el=>io?io.observe(el):el.classList.add("in"));
-let w=0;const msgs=["Hi!","Hi again.","Handal VR says hello.","Okay — let’s talk."];
-$("#egg").onclick=()=>{$("#eggout").textContent=msgs[Math.min(w++,3)];if(w>3)$("#contact").scrollIntoView()};
-const notes=[["Dean’s List","4 semesters"],["Gold","FIRA Malaysia Cup · Aibot",1],["Gold","National Research Seminar Innovation Competition",1],["Grade","3.99 · Diploma, PSIS"],["Next","Interactive Media, UTeM → 2027"],["Tested","Software Tester, Bugz Studio"]];
-const bd=$("#board");
-function mv(b,x,y){b.style.left=Math.max(0,Math.min(bd.clientWidth-b.offsetWidth,x))+"px";b.style.top=Math.max(0,Math.min(bd.clientHeight-b.offsetHeight,y))+"px"}
-notes.forEach((n,i)=>{const b=document.createElement("button");b.className="note"+(n[2]?" hot":"");b.type="button";
- b.innerHTML=`<small>${n[0]}</small>${n[1]}`;b.style.left=(3+(i%3)*32)+"%";b.style.top=(6+Math.floor(i/3)*46)+"%";bd.appendChild(b);
- let sx,sy,ox,oy,d=0;
- b.addEventListener("pointerdown",e=>{d=1;b.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=b.offsetLeft;oy=b.offsetTop;bd.appendChild(b);b.focus()});
- b.addEventListener("pointermove",e=>{if(d)mv(b,ox+e.clientX-sx,oy+e.clientY-sy)});
- b.addEventListener("pointerup",()=>d=0);
- b.addEventListener("keydown",e=>{const k={ArrowLeft:[-16,0],ArrowRight:[16,0],ArrowUp:[0,-16],ArrowDown:[0,16]}[e.key];if(k){e.preventDefault();mv(b,b.offsetLeft+k[0],b.offsetTop+k[1])}})});
-</script>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
+            <div class="lg:col-span-7 z-10 space-y-6">
+                <div class="space-y-2">
+                    <p class="font-mono text-xs text-lavender-500 uppercase tracking-widest">// INTERACTIVE MEDIA & CREATIVE DEVELOPER</p>
+                    <h1 class="title-display font-serif font-light text-charcoal-900 dark:text-pearl-50">
+                        Nur Atiqah <br>
+                        <span class="italic font-normal text-lavender-500">Kamaruzzaman</span>
+                    </h1>
+                </div>
+
+                <p class="text-base sm:text-lg text-charcoal-800/80 dark:text-gray-300 max-w-xl font-light leading-relaxed">
+                    Synthesizing feminine elegance with digital experimentation. Specializing in interactive media, 3D Blender animation, cinematic camera direction, AI color sorting systems, and immersive VR experiences.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4 pt-4 font-mono text-xs">
+                    <a href="#projects" class="px-6 py-3.5 rounded-full bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 hover:bg-lavender-500 dark:hover:bg-lavender-300 hover:text-white transition-all shadow-lg flex items-center gap-3 group">
+                        <span>EXPLORE SELECTED WORK</span>
+                        <span class="group-hover:translate-x-1 transition-transform">↓</span>
+                    </a>
+
+                    <a href="#lab" class="px-6 py-3.5 rounded-full iridescent-border hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-all flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-blush-300"></span>
+                        <span>SHADER LAB EXPERIMENT</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 relative h-[380px] sm:h-[480px] w-full flex items-center justify-center">
+                <div class="absolute inset-0 bg-gradient-to-tr from-lavender-200/40 via-blush-200/30 to-transparent rounded-full filter blur-3xl -z-10 animate-pulse-glow"></div>
+                <div id="canvas-container" class="w-full h-full rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing relative">
+                    <div class="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-charcoal-800/60 dark:text-gray-400 bg-white/40 dark:bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/40">
+                        <span>INTERACTIVE ORB // DRAG OR HOVER</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 01 // ABOUT SECTION -->
+    <section id="about" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 flex flex-col items-center">
+                <div class="w-full max-w-md p-6 rounded-3xl bg-blush-100 dark:bg-charcoal-800 border-4 border-charcoal-900 dark:border-pearl-50 shadow-2xl relative space-y-6">
+                    <div class="flex items-center justify-between font-mono text-xs text-charcoal-900 dark:text-pearl-50">
+                        <span class="tracking-widest uppercase font-semibold">PORTRAIT ARCHIVE</span>
+                        <span id="carousel-counter" class="px-3 py-1 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 text-[10px]">01 / 03</span>
+                    </div>
+                    <div id="carousel-frame" class="w-full h-80 sm:h-96 rounded-2xl overflow-hidden relative border-2 border-charcoal-900/20 dark:border-white/20 group cursor-pointer bg-charcoal-900/5">
+                        <img id="carousel-image" src="" alt="Nur Atiqah Portrait" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="flex items-center justify-center gap-4">
+                        <button id="carousel-prev" class="w-12 h-12 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 flex items-center justify-center shadow-md hover:scale-110 transition-transform text-base">←</button>
+                        <div class="flex gap-2" id="carousel-dots"></div>
+                        <button id="carousel-next" class="w-12 h-12 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 flex items-center justify-center shadow-md hover:scale-110 transition-transform text-base">→</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-8">
+                <div>
+                    <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[01 // ABOUT ME & PHILOSOPHY]</div>
+                    <h2 class="text-4xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
+                        Bridging Human Elegance & <span class="italic font-normal text-lavender-500">Digital Tech</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-4 text-sm text-charcoal-800/80 dark:text-gray-300 font-light leading-relaxed">
+                    <p>
+                        I am Nur Atiqah Kamaruzzaman, an Interactive Media student and creative developer based in Selangor, Malaysia. My practice revolves around bridging design aesthetics with rigorous software development, immersive 3D modeling, and AI-driven applications.
+                    </p>
+                    <p>
+                        With a foundation built through a 3.99 GPA Diploma in Information Technology from Politeknik Sultan Idris Shah and ongoing studies in Computer Science (Interactive Media) at UTeM, I combine front-end coding, Blender animation theory, cinematic camera techniques, VR interaction design, and software quality assurance to build memorable digital products.
+                    </p>
+                </div>
+
+                <div class="space-y-3 font-mono text-xs">
+                    <span class="text-charcoal-800/60 dark:text-gray-400 block">// CORE COMPETENCIES</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Unity & VR (Quest Hand-Tracking)</span>
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Blender 3D Modeling & Animation</span>
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Cinematic Camera Techniques</span>
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Python, PyQt5 & AI Color Sorting</span>
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Software Testing & QA</span>
+                        <span class="px-3 py-1.5 rounded-full iridescent-border">Vector Art & Illustrator</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02 // PROJECTS SECTION -->
+    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div>
+                <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[02 // PORTFOLIO ARCHIVE]</div>
+                <h2 class="text-4xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
+                    Selected <span class="italic font-normal">Works & Projects</span>
+                </h2>
+            </div>
+            
+            <p class="text-xs font-mono text-charcoal-800/60 dark:text-gray-400 max-w-xs">
+                Comprehensive archive featuring video demonstrations, interactive screenshot galleries, and VR interaction modules.
+            </p>
+        </div>
+
+        <!-- CATEGORY FILTER BUTTONS -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-12 no-scrollbar font-mono text-xs">
+            <button class="filter-btn active px-4 py-2 rounded-full border border-charcoal-900 dark:border-pearl-50 bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 transition-all whitespace-nowrap" data-filter="all">ALL [10]</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="ai">AI & ML</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="3d">3D & VIDEO</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="vr">VR & INTERACTIVE</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="web">WEB DEVELOPMENT</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="mobile">MOBILE & UI</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="software">SOFTWARE & PYTHON</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8" id="projects-grid">
+            
+            <!-- Project 1: Handal VR -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="vr" data-id="1">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-lavender-500/20 text-lavender-500 border border-lavender-500/30">UNITY / VR</span>
+                        <span class="font-mono text-xs text-lavender-500">2023 // FYP</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/handalvr1.png" alt="Handal VR" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Handal VR: Hand Gestures</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Immersive VR environment built on Unity utilizing Quest hand-tracking gestures.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">UNITY / QUEST</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 2: Color Sorting Helper (AI Project) -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="ai" data-id="2">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">PYTHON / AI</span>
+                        <span class="font-mono text-xs text-indigo-400">2026 // DEGREE</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/ai.png" alt="AI Color Sorting" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">The Color Sorting Helper (AI Project)</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Interactive AI learning tool for children built on PyQt5 and Teachable Machine.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">PYTHON / TENSORFLOW</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 3: Computer Animation Blender -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="3d" data-id="3">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-teal-500/20 text-teal-400 border border-teal-500/30">BLENDER</span>
+                        <span class="font-mono text-xs text-teal-400">2026 // DEGREE</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/animation1.png" alt="Blender Animation" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Computer Animation Project</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Custom 3D character modeling, rigging, and animation cycle developed in Blender.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">BLENDER 3D</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 4: Personality Walk Video -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="3d" data-id="4">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-400 border border-amber-500/30">VIDEO TECH</span>
+                        <span class="font-mono text-xs text-amber-400">2026 // DEGREE</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/pw.png" alt="Personality Walk" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Personality Walk Video</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Assignment showcasing 9 distinct cinematic camera movement techniques.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">VIDEO TECH</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 5: Guess The Nature -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="vr" data-id="5">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">UNITY / ART</span>
+                        <span class="font-mono text-xs text-emerald-400">2022 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/guessthenature.jpg" alt="Guess The Nature" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Guess The Nature</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Educational mobile game featuring custom vector artwork created in Adobe Illustrator.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">UNITY / ILLUSTRATOR</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 6: Residential College Info Portal -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="mobile" data-id="6">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-blue-500/20 text-blue-400 border border-blue-500/30">ANDROID</span>
+                        <span class="font-mono text-xs text-blue-400">2022 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/mobile.jpg" alt="Residential Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Residential College Info Portal</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Mobile application designed for college hostel residential management.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">ANDROID / JAVA</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 7: Best Holiday Destination Portal -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="web" data-id="7">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-400 border border-amber-500/30">WEB DEV</span>
+                        <span class="font-mono text-xs text-amber-400">2022 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/bh (1).jpg" alt="Tourism Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Best Holiday Destination Portal</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Interactive web portal highlighting Malaysia's prime tourism locations.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">FRONTEND WEB</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 8: Registration Vaccination Portal -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="web" data-id="8">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-violet-500/20 text-violet-400 border border-violet-500/30">PHP / MYSQL</span>
+                        <span class="font-mono text-xs text-violet-400">2022 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/vaccine.jpg" alt="Vaccination Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Registration Vaccination Portal</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Web-based public health registration portal providing citizen appointment schedules.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">FULL-STACK WEB</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 9: Tuition Registration System -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="software" data-id="9">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-purple-500/20 text-purple-400 border border-purple-500/30">PYTHON</span>
+                        <span class="font-mono text-xs text-purple-400">2021 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/ts (3).jpg" alt="Tuition System" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Tuition Registration System</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Python GUI application for tuition centers to oversee student enrollment.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">PYTHON DESKTOP</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+            <!-- Project 10: Car Rental Management -->
+            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="software" data-id="10">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-zinc-500/20 text-zinc-300 border border-zinc-500/30">JAVA</span>
+                        <span class="font-mono text-xs text-zinc-400">2021 // DIPLOMA</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
+                        <img src="images/cr (1).jpg" alt="Car Rental" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
+                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Car Rental Management</h3>
+                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Java-based fleet management application handling vehicle availability and agreements.</p>
+                </div>
+                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                    <span class="text-charcoal-800/60 dark:text-gray-400">JAVA DESKTOP</span>
+                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 03 // TIMELINE SECTION -->
+    <section id="timeline" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
+        <div class="mb-16">
+            <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[03 // ACADEMIC & PROFESSIONAL TIMELINE]</div>
+            <h2 class="text-4xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
+                Education & <span class="italic font-normal">Experience</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="space-y-6">
+                <div class="flex items-center gap-2 font-mono text-xs text-lavender-500">
+                    <span>🎓 ACADEMIC FOUNDATION</span>
+                    <div class="h-[1px] flex-grow bg-charcoal-900/10 dark:border-white/10"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Universiti Teknikal Malaysia Melaka (UTeM)</h4>
+                                <p class="text-xs text-lavender-500 font-mono">Bachelor Degree of Computer Science (Interactive Media)</p>
+                            </div>
+                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Sep 2025 – Sep 2027</span>
+                        </div>
+                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
+                            Specializing in immersive virtual reality, Blender 3D animation, digital audio and video camera techniques, AI image classifiers, and interactive media UX.
+                        </p>
+                    </div>
+
+                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Politeknik Sultan Idris Shah</h4>
+                                <p class="text-xs text-lavender-500 font-mono">Diploma in Information Technology — <span class="text-emerald-500 font-semibold">GPA: 3.99</span></p>
+                            </div>
+                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Mar 2021 – Jun 2023</span>
+                        </div>
+                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
+                            Graduated with distinction (3.99 GPA). Developed strong software engineering foundations across Java, Web, Mobile Applications, and Python development.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="flex items-center gap-2 font-mono text-xs text-lavender-500">
+                    <span>💼 PROFESSIONAL EXPERIENCE</span>
+                    <div class="h-[1px] flex-grow bg-charcoal-900/10 dark:border-white/10"></div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">AY Global Ventures</h4>
+                                <p class="text-xs text-lavender-500 font-mono">Crew Event (Part-time)</p>
+                            </div>
+                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Aug 2026 – Sep 2026</span>
+                        </div>
+                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
+                            Managed event operations, guest experience design, and visual setup for corporate activation events in Klang, Selangor.
+                        </p>
+                    </div>
+
+                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Bugz Studio Sdn Bhd</h4>
+                                <p class="text-xs text-lavender-500 font-mono">Software Tester (Full-time)</p>
+                            </div>
+                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Jan 2024 – Sep 2025</span>
+                        </div>
+                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
+                            Led software quality assurance testing, user acceptance testing (UAT), regression testing pipelines, and UI consistency verification across software releases.
+                        </p>
+                    </div>
+
+                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">CARA COM MY SDN BHD</h4>
+                                <p class="text-xs text-lavender-500 font-mono">Frontend Developer Intern</p>
+                            </div>
+                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Jan 2022 – Jun 2022</span>
+                        </div>
+                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
+                            Built responsive client web interfaces using modern HTML, CSS, and JavaScript. Collaborated with UI designers to transform graphic mockups into code.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 // LAB SECTION -->
+    <section id="lab" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+            <div class="lg:w-1/3 space-y-6">
+                <div>
+                    <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[04 // CREATIVE CODING LAB]</div>
+                    <h2 class="text-3xl sm:text-4xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
+                        Soft Futurism <br><span class="italic font-normal">Shader Experiment</span>
+                    </h2>
+                </div>
+
+                <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light leading-relaxed">
+                    An interactive generative canvas evaluating fluid displacement, chromatic iridescence, and wave physics in real time. Adjust parameters below to sculpt the digital liquid.
+                </p>
+
+                <div class="space-y-4 p-6 rounded-2xl iridescent-border font-mono text-xs">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Iridescence Speed</span>
+                            <span id="val-speed">1.0</span>
+                        </div>
+                        <input type="range" id="param-speed" min="0.1" max="3.0" step="0.1" value="1.0" class="w-full accent-lavender-500 cursor-pointer">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Liquid Waves Distortion</span>
+                            <span id="val-distortion">20.0</span>
+                        </div>
+                        <input type="range" id="param-distortion" min="5" max="50" step="1" value="20" class="w-full accent-lavender-500 cursor-pointer">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span>Particle Dispersion</span>
+                            <span id="val-particles">40</span>
+                        </div>
+                        <input type="range" id="param-particles" min="10" max="100" step="5" value="40" class="w-full accent-lavender-500 cursor-pointer">
+                    </div>
+
+                    <button id="reset-lab" class="w-full py-2.5 rounded-xl border border-charcoal-900/20 dark:border-white/20 hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors text-[10px] uppercase tracking-wider">
+                        RESET PARAMETERS
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:w-2/3 w-full h-[420px] rounded-3xl overflow-hidden iridescent-border relative">
+                <canvas id="lab-canvas" class="w-full h-full block"></canvas>
+                <div class="absolute top-4 left-4 font-mono text-[10px] text-charcoal-800/60 dark:text-gray-400 bg-white/50 dark:bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    <span>LIVE CANVAS GENERATOR // CANVAS2D SHADER</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 // CONTACT SECTION -->
+    <section id="contact" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
+        <div class="iridescent-border rounded-3xl p-8 sm:p-16 relative overflow-hidden text-center space-y-8">
+            <div class="absolute inset-0 bg-gradient-to-tr from-lavender-200/30 via-blush-200/20 to-transparent pointer-events-none"></div>
+
+            <div class="space-y-4 max-w-2xl mx-auto relative z-10">
+                <span class="font-mono text-xs text-lavender-500 uppercase tracking-widest">[05 // INITIATE COLLABORATION]</span>
+                <h2 class="text-4xl sm:text-6xl font-serif font-light text-charcoal-900 dark:text-pearl-50 leading-tight">
+                    Let's build something <br><span class="italic font-normal text-lavender-500">surreal together.</span>
+                </h2>
+                <p class="text-sm text-charcoal-800/70 dark:text-gray-300 font-light">
+                    Open for creative media projects, interactive web design, VR experiences, AI applications, and front-end development roles.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 relative z-10 font-mono text-xs">
+                <a href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 hover:bg-lavender-500 transition-all shadow-lg flex items-center gap-3">
+                    <span>CONNECT ON LINKEDIN</span>
+                    <span>↗</span>
+                </a>
+
+                <button id="copy-email-btn" class="px-8 py-4 rounded-full iridescent-border hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-all flex items-center gap-2">
+                    <span id="copy-text">COPY EMAIL ADDRESS</span>
+                    <span id="copy-icon">📋</span>
+                </button>
+            </div>
+
+            <div class="pt-8 text-xs font-mono text-charcoal-800/50 dark:text-gray-500">
+                <span>SELANGOR, MALAYSIA // KUALA LUMPUR TIME ZONE (UTC+8)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL PROJECT MODAL (CASE STUDY + VIDEO + GALLERIES) -->
+    <div id="full-project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300 case-modal-blur bg-black/70">
+        <div class="w-full max-w-5xl max-h-[90vh] bg-white dark:bg-charcoal-900 rounded-3xl iridescent-border overflow-y-auto p-6 sm:p-10 space-y-8 relative shadow-2xl">
+            <button id="close-modal-btn" class="sticky top-0 float-right w-10 h-10 rounded-full iridescent-border flex items-center justify-center font-mono text-sm hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors z-20 bg-white/80 dark:bg-charcoal-900/80 backdrop-blur-md">
+                ✕
+            </button>
+
+            <!-- Modal Header -->
+            <div class="space-y-3 pt-2 border-b border-charcoal-900/10 dark:border-white/10 pb-6">
+                <div class="flex items-center gap-3 font-mono text-xs text-lavender-500 uppercase tracking-widest">
+                    <span id="modal-category">CATEGORY</span>
+                    <span>//</span>
+                    <span id="modal-year">YEAR</span>
+                </div>
+                <h2 id="modal-title" class="text-3xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">Project Title</h2>
+                <p id="modal-tagline" class="text-sm font-mono text-charcoal-800/70 dark:text-gray-400">Tagline overview</p>
+            </div>
+
+            <!-- Case Study Detail Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 text-xs font-mono border-b border-charcoal-900/10 dark:border-white/10 pb-8">
+                <div class="md:col-span-4 space-y-4 p-6 rounded-2xl bg-pearl-100/50 dark:bg-charcoal-800/50 border border-charcoal-900/5 dark:border-white/5">
+                    <div>
+                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">MY ROLE</span>
+                        <span id="modal-role" class="text-charcoal-900 dark:text-pearl-50 font-medium">Role description</span>
+                    </div>
+                    <div>
+                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">TECH STACK</span>
+                        <span id="modal-stack" class="text-charcoal-900 dark:text-pearl-50">Tech stack list</span>
+                    </div>
+                    <div>
+                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">INSTITUTION / CONTEXT</span>
+                        <span id="modal-context" class="text-charcoal-900 dark:text-pearl-50">UTeM / Politeknik</span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-8 space-y-6 text-sm font-sans font-light text-charcoal-800/80 dark:text-gray-300 leading-relaxed">
+                    <div>
+                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Project Brief & Concept</h4>
+                        <p id="modal-brief">Detailed brief goes here...</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Key Deliverables & Execution</h4>
+                        <p id="modal-execution">Execution details...</p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Reflection & Impact</h4>
+                        <p id="modal-reflection">Reflection text...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Demo Container -->
+            <div class="space-y-3" id="modal-video-container">
+                <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400 uppercase tracking-wider">// YOUTUBE PROJECT DEMO WALKTHROUGH</span>
+                <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 bg-black">
+                    <iframe id="modal-iframe" class="w-full h-full" src="" title="Project Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; webshare" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Screenshots Gallery Grid -->
+            <div class="space-y-3">
+                <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400 uppercase tracking-wider">// IN-GAME / MODULE SCREENSHOTS (CLICK TO VIEW LARGER)</span>
+                <div id="modal-screenshots-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Screenshots -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <button id="lightbox-close" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-lg hover:bg-white/40 transition-colors z-10">✕</button>
+        <div class="max-w-5xl max-h-[90vh] relative flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="Enlarged Visual" class="max-w-full max-h-[80vh] rounded-2xl object-contain border-2 border-white/20 shadow-2xl">
+            <p id="lightbox-caption" class="text-white font-mono text-xs mt-4 tracking-wider text-center"></p>
+        </div>
+    </div>
+
+    <script>
+        const portraitSlides = [
+            { url: "images/my-photo1.png", caption: "01 // Nur Atiqah Kamaruzzaman" },
+            { url: "images/my-photo2.jpg", caption: "02 // Portrait Session" },
+            { url: "images/my-photo3.jpeg", caption: "03 // Studio Frame" }
+        ];
+
+        let currentSlideIndex = 0;
+        function initCarousel() {
+            const imgEl = document.getElementById('carousel-image');
+            const counterEl = document.getElementById('carousel-counter');
+            const dotsContainer = document.getElementById('carousel-dots');
+            if (!imgEl) return;
+
+            dotsContainer.innerHTML = '';
+            portraitSlides.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-charcoal-900 dark:bg-pearl-50 scale-125' : 'bg-charcoal-900/30 dark:bg-pearl-50/30'}`;
+                dot.addEventListener('click', () => { currentSlideIndex = idx; updateCarousel(); });
+                dotsContainer.appendChild(dot);
+            });
+
+            function updateCarousel() {
+                const slide = portraitSlides[currentSlideIndex];
+                imgEl.src = slide.url;
+                counterEl.textContent = `0${currentSlideIndex + 1} / 0${portraitSlides.length}`;
+                Array.from(dotsContainer.children).forEach((d, idx) => {
+                    d.className = `w-3 h-3 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-charcoal-900 dark:bg-pearl-50 scale-125' : 'bg-charcoal-900/30 dark:bg-pearl-50/30'}`;
+                });
+            }
+            updateCarousel();
+
+            document.getElementById('carousel-prev')?.addEventListener('click', () => {
+                currentSlideIndex = (currentSlideIndex - 1 + portraitSlides.length) % portraitSlides.length;
+                updateCarousel();
+            });
+            document.getElementById('carousel-next')?.addEventListener('click', () => {
+                currentSlideIndex = (currentSlideIndex + 1) % portraitSlides.length;
+                updateCarousel();
+            });
+        }
+
+        const fullCaseStudyData = {
+            '1': {
+                title: "Handal VR: Hand Gestures",
+                category: "VIRTUAL REALITY",
+                year: "2023 // FYP",
+                tagline: "Interaction with Hand Gestures in Unity VR",
+                role: "VR & Unity Developer",
+                stack: "Unity 3D, C#, Meta Quest SDK, Hand Tracking",
+                context: "Universiti Teknikal Malaysia Melaka (UTeM)",
+                brief: "Developed an immersive VR playground utilizing natural hand gestures to control various interactive stations including carrom, bowling, racing, and solar system physics.",
+                execution: "Integrated Meta Quest hand-tracking SDK with physics colliders, custom gesture listeners, and audio response triggers.",
+                reflection: "Achieved seamless gesture recognition for immersive user interaction without needing physical hardware controllers.",
+                video: "https://www.youtube.com/embed/I_08JeYa7_c",
+                screenshots: [
+                    { src: "images/handalvr1.png", caption: "01 // Title Screen & Lobby" },
+                    { src: "images/handalvr2.png", caption: "02 // Bowling & Color Sorting" },
+                    { src: "images/handalvr3.png", caption: "03 // Solar System & Carrom" },
+                    { src: "images/handalvr4.png", caption: "04 // Race Track & Controls" },
+                    { src: "images/handalvr5.png", caption: "05 // Interactive Drums" },
+                    { src: "images/handalvr6.png", caption: "06 // Touch Keypads UI" },
+                    { src: "images/handalvr7.png", caption: "07 // Mini Game 2: Pistol Mechanics" }
+                ]
+            },
+            '2': {
+                title: "The Color Sorting Helper (AI Project)",
+                category: "AI & MACHINE LEARNING",
+                year: "2026 // DEGREE PROJECT",
+                tagline: "AI-based Interactive Learning Tool for Children using Image Classification",
+                role: "AI & Python Developer",
+                stack: "Python, PyQt5, TensorFlow Keras, Teachable Machine, OpenCV, pyttsx3",
+                context: "Universiti Teknikal Malaysia Melaka (UTeM)",
+                brief: "Designed an interactive learning tool that assists children in identifying and sorting colors using computer vision and machine learning.",
+                execution: "Trained 3 classes (red, blue, green) with 400 image samples each via Teachable Machine, exported to TensorFlow Keras, and engineered a PyQt5 desktop GUI with camera feed, confidence star ratings, emoji feedback, and pyttsx3 speech synthesis.",
+                reflection: "Successfully integrated deep learning image classifiers into a child-friendly desktop interface with multi-threaded speech output.",
+                video: "",
+                screenshots: [
+                    { src: "images/ai-color.png", caption: "01 // Main AI Classification Dashboard" },
+                    { src: "images/1000002142_330b014f6c3ab9338209ac37b6316524-23_10_2023, 23_04_04.jpg", caption: "02 // Live Camera Feed & Confidence Rating" }
+                ]
+            },
+            '3': {
+                title: "Computer Animation Project",
+                category: "3D & ANIMATION",
+                year: "2026 // DEGREE ASSIGNMENT",
+                tagline: "Custom Character Modeling, Rigging, and Animation Cycle in Blender",
+                role: "3D Character Artist & Animator",
+                stack: "Blender, Mesh Modeling, Weight Painting, Rigging",
+                context: "Universiti Teknikal Malaysia Melaka (UTeM)",
+                brief: "Creating an original 3D character model from scratch with appropriate topology, skeletal rigging, and full animation performance.",
+                execution: "Sculpted a stylized character with custom proportions, applied material shaders, weighted skeletal armature, and animated movement in Blender.",
+                reflection: "Gained mastery over clean edge flow topology, bone weight assignment, and keyframe animation curves in Blender.",
+                video: "https://www.youtube.com/embed/l9-7Vy-u8Gw",
+                screenshots: [
+                    { src: "images/blender-anim.png", caption: "01 // Character Rigging & Mesh Topology" },
+                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Keyframe Walk Cycle Render" }
+                ]
+            },
+            '4': {
+                title: "Personality Walk Video",
+                category: "3D & VIDEO TECH",
+                year: "2026 // DEGREE ASSIGNMENT 2",
+                tagline: "Applying 9 Distinct Cinematic Camera Techniques During a Walking Sequence",
+                role: "Videographer & Camera Director",
+                stack: "Camera Control, Framing, Panning, Tracking, Gimbal Movements",
+                context: "Universiti Teknikal Malaysia Melaka (UTeM)",
+                brief: "Assignment focused on mastering camera movement techniques while recording a character walking sequence.",
+                execution: "Executed 9 specific camera techniques: 1. The Follow, 2. The Reverse Follow, 3. The Step-in Reveal, 4. The Mini Jib Reveal, 5. The Side Track, 6. The Chest Transition, 7. The Wipe Transition, 8. The Orbit, and 9. The Fake Drone.",
+                reflection: "Deepened professional command over cinematic framing, smooth physical camera transitions, and storytelling through spatial motion.",
+                video: "https://www.youtube.com/embed/6n_wDeIMR58",
+                screenshots: [
+                    { src: "images/pw2.png", caption: "01 // Cinematic Tracking & Framing" },
+                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Step-in Reveal Shot" }
+                ]
+            },
+            '5': {
+                title: "Guess The Nature",
+                category: "UNITY / VECTOR ART",
+                year: "2022 // DIPLOMA",
+                tagline: "Educational Mobile Game with Custom Vector Artwork",
+                role: "UI Designer & Developer",
+                stack: "Unity 2D, C#, Adobe Illustrator",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Designed an interactive mobile quiz and matching game for primary students focused on nature conservation.",
+                execution: "Created custom vector graphics in Illustrator and implemented interactive match-up logic in Unity.",
+                reflection: "Enhanced cross-platform asset optimization and user-friendly interface design for children.",
+                video: "",
+                screenshots: [
+                    { src: "images/guessthenature2.jpg", caption: "01 // Quiz & Match-up Game Screen" },
+                    { src: "images/guessthenature3.jpg", caption: "02 // Adobe Illustrator Vector Design" }
+                ]
+            },
+            '6': {
+                title: "Residential College Info Portal",
+                category: "ANDROID / MOBILE",
+                year: "2022 // DIPLOMA",
+                tagline: "Mobile Portal for Hostel Management & Records",
+                role: "Android Developer",
+                stack: "Android Studio, Java, Firebase",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Built a mobile application to streamline residential hostel registrations and announcements.",
+                execution: "Engineered student profiles, room application forms, and real-time administrative notification feeds.",
+                reflection: "Improved database CRUD connectivity and mobile UX layouts.",
+                video: "",
+                screenshots: [
+                    { src: "images/residentialapp.png", caption: "01 // Mobile App Interface" },
+                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Student Registration Module" }
+                ]
+            },
+            '7': {
+                title: "Best Holiday Destination Portal",
+                category: "WEB DEVELOPMENT",
+                year: "2022 // DIPLOMA",
+                tagline: "Interactive Tourism Portal for Sabah & Kota Kinabalu",
+                role: "Frontend Developer",
+                stack: "HTML5, CSS3, JavaScript",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Developed a responsive web portal highlighting key travel destinations across Malaysia.",
+                execution: "Constructed photo galleries, dynamic maps, and interactive tourist activity guides.",
+                reflection: "Mastered responsive grid layouts and web typography.",
+                video: "",
+                screenshots: [
+                    { src: "images/tourismportal.png", caption: "01 // Tourism Landing Page" },
+                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Destination Details Grid" }
+                ]
+            },
+            '8': {
+                title: "Registration Vaccination Portal",
+                category: "FULL-STACK WEB",
+                year: "2022 // DIPLOMA",
+                tagline: "Healthcare & Vaccine Appointment System",
+                role: "Full-Stack Web Developer",
+                stack: "PHP, MySQL, Bootstrap",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Created a web system for citizens to register for healthcare appointments.",
+                execution: "Implemented appointment slot scheduling, database updates, and admin dashboards.",
+                reflection: "Strengthened web security practices and relational database normalization.",
+                video: "",
+                screenshots: [
+                    { src: "images/vaccine2.jpg", caption: "01 // Citizen Registration Dashboard" },
+                    { src: "images/vaccine3.jpg", caption: "02 // Healthcare Provider View" }
+                ]
+            },
+            '9': {
+                title: "Tuition Registration System",
+                category: "PYTHON DESKTOP",
+                year: "2021 // DIPLOMA",
+                tagline: "Tuition Center Student Enrollment Software",
+                role: "Python Developer",
+                stack: "Python, Tkinter, SQLite",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Engineered desktop software for managing student subject enrollments and payments.",
+                execution: "Built a clean Tkinter GUI, dynamic subject assignments, and fee calculation logic.",
+                reflection: "Gained core desktop GUI architecture experience.",
+                video: "",
+                screenshots: [
+                    { src: "images/tuitionsystem.png", caption: "01 // Enrollment GUI Form" },
+                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Subject & Fee Management" }
+                ]
+            },
+            '10': {
+                title: "Car Rental Management",
+                category: "JAVA DESKTOP",
+                year: "2021 // DIPLOMA",
+                tagline: "Fleet & Rental Agreement Software",
+                role: "Java Software Developer",
+                stack: "Java, Swing, MySQL",
+                context: "Politeknik Sultan Idris Shah",
+                brief: "Desktop management application overseeing car rental agreements and vehicle availability.",
+                execution: "Designed vehicle inventory logs, rental rate calculators, and receipt generation.",
+                reflection: "Solidified object-oriented programming patterns in Java.",
+                video: "",
+                screenshots: [
+                    { src: "images/carrental.png", caption: "01 // Vehicle Inventory View" },
+                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Rental Calculation Summary" }
+                ]
+            }
+        };
+
+        function initHero3DCanvas() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(1.1, 0.38, 128, 32);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: 0xC4C0EC,
+                metalness: 0.85,
+                roughness: 0.15,
+                clearcoat: 1.0,
+                clearcoatRoughness: 0.1,
+                reflectivity: 0.9,
+                wireframe: false
+            });
+
+            const torusMesh = new THREE.Mesh(geometry, material);
+            scene.add(torusMesh);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+
+            const pointLight1 = new THREE.PointLight(0x8E85E0, 2, 50);
+            pointLight1.position.set(5, 5, 5);
+            scene.add(pointLight1);
+
+            const pointLight2 = new THREE.PointLight(0xF4E3E8, 2, 50);
+            pointLight2.position.set(-5, -5, -5);
+            scene.add(pointLight2);
+
+            let mouseX = 0, mouseY = 0;
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+                mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                torusMesh.rotation.x += 0.005;
+                torusMesh.rotation.y += 0.008;
+                torusMesh.rotation.y += (mouseX * 0.5 - torusMesh.rotation.y) * 0.05;
+                torusMesh.rotation.x += (-mouseY * 0.5 - torusMesh.rotation.x) * 0.05;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+
+        function initGenerativeLabCanvas() {
+            const canvas = document.getElementById('lab-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            let speed = 1.0;
+            let distortion = 20;
+            let particleCount = 40;
+            let time = 0;
+
+            document.getElementById('param-speed')?.addEventListener('input', (e) => {
+                speed = parseFloat(e.target.value);
+                document.getElementById('val-speed').textContent = speed.toFixed(1);
+            });
+            document.getElementById('param-distortion')?.addEventListener('input', (e) => {
+                distortion = parseFloat(e.target.value);
+                document.getElementById('val-distortion').textContent = distortion;
+            });
+            document.getElementById('param-particles')?.addEventListener('input', (e) => {
+                particleCount = parseInt(e.target.value);
+                document.getElementById('val-particles').textContent = particleCount;
+            });
+
+            document.getElementById('reset-lab')?.addEventListener('click', () => {
+                speed = 1.0;
+                distortion = 20;
+                particleCount = 40;
+                document.getElementById('param-speed').value = 1.0;
+                document.getElementById('param-distortion').value = 20;
+                document.getElementById('param-particles').value = 40;
+                document.getElementById('val-speed').textContent = "1.0";
+                document.getElementById('val-distortion').textContent = "20";
+                document.getElementById('val-particles').textContent = "40";
+            });
+
+            function render() {
+                time += 0.01 * speed;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < 4; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, canvas.height / 2);
+
+                    for (let x = 0; x < canvas.width; x += 10) {
+                        const y = Math.sin(x * 0.008 + time + i * 1.5) * distortion +
+                                  Math.cos(x * 0.004 + time) * (distortion * 0.5) +
+                                  canvas.height / 2;
+                        ctx.lineTo(x, y);
+                    }
+
+                    ctx.lineTo(canvas.width, canvas.height);
+                    ctx.lineTo(0, canvas.height);
+
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, `hsla(${(time * 20 + i * 40) % 360}, 60%, 80%, 0.25)`);
+                    gradient.addColorStop(1, `hsla(${(time * 20 + i * 40 + 60) % 360}, 50%, 90%, 0.05)`);
+
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                }
+
+                for (let p = 0; p < particleCount; p++) {
+                    const px = (Math.sin(p * 99 + time * 0.5) * 0.5 + 0.5) * canvas.width;
+                    const py = (Math.cos(p * 33 + time * 0.3) * 0.5 + 0.5) * canvas.height;
+                    const radius = Math.sin(p + time) * 2 + 3;
+
+                    ctx.beginPath();
+                    ctx.arc(px, py, Math.abs(radius), 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(196, 192, 236, 0.6)`;
+                    ctx.fill();
+                }
+
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initHero3DCanvas();
+            initGenerativeLabCanvas();
+            initCarousel();
+
+            // FILTER BUTTONS FUNCTIONALITY
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-charcoal-900', 'dark:bg-pearl-50', 'text-pearl-50', 'dark:text-charcoal-900');
+                        b.classList.add('border-charcoal-900/20', 'dark:border-white/20');
+                    });
+                    btn.classList.add('active', 'bg-charcoal-900', 'dark:bg-pearl-50', 'text-pearl-50', 'dark:text-charcoal-900');
+
+                    const category = btn.getAttribute('data-filter');
+
+                    projectCards.forEach(card => {
+                        const cardCat = card.getAttribute('data-category');
+                        if (category === 'all' || cardCat === category) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // MODAL LOGIC
+            const modal = document.getElementById('full-project-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const modalIframe = document.getElementById('modal-iframe');
+            const modalVideoContainer = document.getElementById('modal-video-container');
+            const modalScreenshotsGrid = document.getElementById('modal-screenshots-grid');
+
+            function openModal(id) {
+                const data = fullCaseStudyData[id];
+                if (!data) return;
+
+                document.getElementById('modal-title').textContent = data.title;
+                document.getElementById('modal-category').textContent = data.category;
+                document.getElementById('modal-year').textContent = data.year;
+                document.getElementById('modal-tagline').textContent = data.tagline;
+                document.getElementById('modal-role').textContent = data.role;
+                document.getElementById('modal-stack').textContent = data.stack;
+                document.getElementById('modal-context').textContent = data.context;
+                document.getElementById('modal-brief').textContent = data.brief;
+                document.getElementById('modal-execution').textContent = data.execution;
+                document.getElementById('modal-reflection').textContent = data.reflection;
+
+                if (data.video) {
+                    modalVideoContainer.style.display = 'block';
+                    modalIframe.src = data.video;
+                } else {
+                    modalVideoContainer.style.display = 'none';
+                    modalIframe.src = '';
+                }
+
+                modalScreenshotsGrid.innerHTML = '';
+                data.screenshots.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'rounded-xl overflow-hidden border border-charcoal-900/10 dark:border-white/10 cursor-pointer group';
+                    card.innerHTML = `
+                        <img src="${item.src}" alt="${item.caption}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform">
+                        <div class="p-3 bg-pearl-100 dark:bg-charcoal-800 text-xs font-mono">${item.caption}</div>
+                    `;
+                    card.addEventListener('click', () => {
+                        const lightbox = document.getElementById('lightbox-modal');
+                        document.getElementById('lightbox-img').src = item.src;
+                        document.getElementById('lightbox-caption').textContent = item.caption;
+                        lightbox.classList.remove('opacity-0', 'pointer-events-none');
+                    });
+                    modalScreenshotsGrid.appendChild(card);
+                });
+
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = 'hidden';
+            }
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.getAttribute('data-id');
+                    if (id) openModal(id);
+                });
+            });
+
+            closeModalBtn?.addEventListener('click', () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalIframe.src = '';
+                document.body.style.overflow = 'auto';
+            });
+
+            modal?.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    modalIframe.src = '';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Lightbox Modal
+            const lightbox = document.getElementById('lightbox-modal');
+            document.getElementById('lightbox-close')?.addEventListener('click', () => {
+                lightbox.classList.add('opacity-0', 'pointer-events-none');
+            });
+            lightbox?.addEventListener('click', (e) => {
+                if (e.target === lightbox) lightbox.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            // Theme Toggle
+            const themeBtn = document.getElementById('theme-toggle');
+            let isDark = false;
+            themeBtn?.addEventListener('click', () => {
+                isDark = !isDark;
+                document.body.classList.toggle('dark-theme', isDark);
+                document.documentElement.classList.toggle('dark', isDark);
+                document.getElementById('theme-icon').textContent = isDark ? '☀' : '✦';
+            });
+
+            // Copy Email
+            const copyBtn = document.getElementById('copy-email-btn');
+            copyBtn?.addEventListener('click', () => {
+                const email = 'atiqahkamaruzzaman@gmail.com';
+                const tempInput = document.createElement('input');
+                tempInput.value = email;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                document.getElementById('copy-text').textContent = 'EMAIL COPIED!';
+                setTimeout(() => {
+                    document.getElementById('copy-text').textContent = 'COPY EMAIL ADDRESS';
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
