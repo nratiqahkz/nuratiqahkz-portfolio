@@ -1,896 +1,289 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nur Atiqah Kamaruzzaman — Interactive Media & Creative Developer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nur Atiqah Kamaruzzaman — Interactive Media & Creative Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--iris:#C5B8FF;--blush:#F4C7E6;--glacier:#A9DDF4;--pearl:#F7F1E8;--ink:#25243B;--night:#14122A;--line:rgba(255,255,255,.14);--serif:'Playfair Display',Georgia,serif;--sans:'Poppins',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--hand:'Caveat',cursive}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--pearl);color:var(--ink);overflow-x:hidden;line-height:1.6}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--iris);outline-offset:3px}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.hand{font-family:var(--hand);font-size:1.5rem;color:var(--iris);line-height:1.1}
+.serif{font-family:var(--serif)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+/* nav */
+header{position:fixed;inset:0 0 auto 0;z-index:40;padding:18px 0;color:#fff}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:12px;font-size:13px}
+.logo b{font-family:var(--serif);font-size:24px;font-weight:500;letter-spacing:-.08em;border:1px solid #fff6;border-radius:12px;padding:2px 9px;background:#ffffff14;backdrop-filter:blur(10px)}
+nav{display:flex;gap:30px;font-size:13px;padding:10px 28px;border-radius:99px;background:#ffffff12;backdrop-filter:blur(14px);border:1px solid var(--line)}
+nav a{opacity:.75;transition:.2s;position:relative}nav a:hover,nav a.on{opacity:1}
+nav a.on::after{content:'';position:absolute;left:30%;right:30%;bottom:-6px;height:1px;background:#fff}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:12px 26px;border-radius:99px;font-size:13px;border:1px solid #ffffff55;background:#ffffff1c;backdrop-filter:blur(12px);transition:.25s}
+.pill:hover{background:#fff;color:var(--ink);transform:translateY(-2px)}
+.pill.solid{background:var(--pearl);color:var(--ink);border-color:var(--pearl)}.pill.solid:hover{background:var(--iris)}
+#menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:1px solid #fff5;background:#ffffff18}
+/* hero */
+#hero{position:relative;min-height:100vh;color:#fff;overflow:hidden;display:flex;align-items:center;padding:120px 0 80px;
+background:radial-gradient(ellipse at 75% 30%,#d8a9d6aa,transparent 55%),radial-gradient(ellipse at 20% 90%,#6c7bd8aa,transparent 55%),linear-gradient(160deg,#3a2f78,#6b5bb5 45%,#c79bd1 85%,#f2b8c6)}
+#hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center;position:relative;z-index:2;width:100%}
+.hi{font-family:var(--serif);font-style:italic;font-size:2rem;opacity:.9}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.8rem,6.4vw,5.6rem);line-height:1;letter-spacing:-.025em;margin:6px 0 22px}
+h1 em{display:block;font-style:normal;background:linear-gradient(90deg,#fff,var(--glacier),var(--blush));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:1.05rem;margin-bottom:8px}.lead{font-weight:300;opacity:.85;max-width:420px;margin-bottom:30px}
+.portal{position:relative;aspect-ratio:1;max-width:560px;margin-left:auto;width:100%}
+.portal .ring{position:absolute;inset:9%;border-radius:50%;border:1px solid #ffffff66;box-shadow:0 0 90px #c5b8ff88,inset 0 0 60px #ffffff22}
+.portal .photo{position:absolute;inset:13%;border-radius:50%;overflow:hidden;box-shadow:0 30px 80px #1b1048aa;will-change:transform}
+.portal .photo img{width:100%;height:100%;object-fit:cover;object-position:34% 38%;transform:scale(1.35);transform-origin:34% 38%}
+#ribbon{position:absolute;inset:-6%;width:112%;height:112%;pointer-events:none}
+.tag{position:absolute;left:-2%;top:26%;padding:10px 16px;background:#ffffff2e;border:1px solid #ffffff55;backdrop-filter:blur(14px);border-radius:14px;font-size:12px;transform:rotate(-8deg);line-height:1.35;z-index:3}
+.note{position:absolute;right:0;top:2%;transform:rotate(-8deg);color:#fff;text-align:left;z-index:3}
+.stack{position:absolute;right:-2%;bottom:8%;width:150px;padding:18px;border-radius:18px;background:#ffffff1c;border:1px solid var(--line);backdrop-filter:blur(14px);font-size:12px;display:grid;gap:7px;z-index:3}
+.stack span{opacity:.8}.stack span::before{content:'+ ';opacity:.5}
+.scroll{position:absolute;left:24px;bottom:40px;display:flex;align-items:center;gap:12px;z-index:3;font-size:10px}
+.scroll i{width:1px;height:46px;background:#fff6;position:relative;overflow:hidden}
+.scroll i::after{content:'';position:absolute;left:-1px;top:0;width:3px;height:12px;border-radius:2px;background:#fff;animation:sc 2s infinite}
+@keyframes sc{0%{top:-12px}100%{top:46px}}
+/* sections */
+section{position:relative}.dark{background:var(--night);color:var(--pearl)}
+.sec{padding:110px 0}
+.eyebrow{display:flex;gap:12px;align-items:center;opacity:.7;margin-bottom:18px}.eyebrow::before{content:'';width:34px;height:1px;background:currentColor}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.02;letter-spacing:-.02em}
+h2 em{color:var(--iris)}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+/* about */
+#about{background:radial-gradient(circle at 80% 20%,#3b2b7a55,transparent 50%),var(--night)}
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.about-grid p{font-weight:300;opacity:.82;margin:22px 0;max-width:460px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{padding:7px 14px;border:1px solid var(--line);border-radius:99px;font-size:12px;background:#ffffff0a;transition:.2s;cursor:default}.chips span:hover{background:var(--iris);color:var(--ink)}
+.scrap{position:relative;height:540px}
+.pol{position:absolute;background:#f7f1e8;padding:10px 10px 38px;box-shadow:0 20px 50px #0008;transition:transform .4s,z-index 0s;cursor:pointer;width:46%}
+.pol img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.pol span{position:absolute;bottom:8px;left:12px;font-family:var(--hand);font-size:1.15rem;color:var(--ink)}
+.pol:hover{transform:rotate(0) scale(1.07)!important;z-index:9}
+.pol:nth-child(1){left:0;top:30px;transform:rotate(-6deg)}.pol:nth-child(2){left:44%;top:0;transform:rotate(5deg);width:50%}.pol:nth-child(3){left:12%;top:48%;transform:rotate(3deg)}.pol:nth-child(4){left:56%;top:50%;transform:rotate(-4deg);width:40%}
+.scrap .hand{position:absolute;right:0;bottom:-30px;transform:rotate(-5deg);z-index:10}
+/* projects */
+#projects{background:var(--pearl)}#projects h2 em{color:#7c6bd6}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:34px}
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:34px;scrollbar-width:none}
+.filters button{padding:9px 18px;border-radius:99px;border:1px solid #25243b33;font-size:12px;white-space:nowrap;transition:.2s}
+.filters button:hover{border-color:var(--iris)}.filters button.on{background:var(--ink);color:var(--pearl);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.card{grid-column:span 4;border-radius:26px;overflow:hidden;position:relative;background:#fff;box-shadow:0 12px 40px #6b5bb522;cursor:pointer;transition:.4s;display:flex;flex-direction:column;text-align:left}
+.card:hover{transform:translateY(-8px);box-shadow:0 26px 60px #6b5bb544}
+.card .im{height:210px;overflow:hidden;position:relative;background:#e8e2f5}.card .im img{width:100%;height:100%;object-fit:cover;transition:transform .8s}.card:hover .im img{transform:scale(1.07)}
+.card .im::after{content:'VIEW CASE STUDY ↗';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#25243bb0;color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.15em;opacity:0;transition:.3s}.card:hover .im::after{opacity:1}
+.card .bd{padding:22px 24px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-family:var(--serif);font-weight:500;font-size:1.4rem;line-height:1.15}.card p{font-size:13px;font-weight:300;color:#25243bcc;flex:1}
+.meta{display:flex;justify-content:space-between;color:#7c6bd6}
+.card.big{grid-column:span 8;flex-direction:row;background:var(--ink);color:var(--pearl)}.card.big p{color:#f7f1e8cc}.card.big .im{height:auto;width:55%;min-height:340px}.card.big .bd{justify-content:center;padding:34px}.card.big h3{font-size:2rem}.card.big .meta{color:var(--glacier)}
+.card.wide{grid-column:span 6}
+.card.dk{background:var(--night);color:var(--pearl)}.card.dk p{color:#f7f1e8cc}.card.dk .meta{color:var(--blush)}
+.tools{font-family:var(--mono);font-size:10px;opacity:.6;letter-spacing:.08em;text-transform:uppercase}
+/* journey */
+#timeline{background:linear-gradient(180deg,var(--night),#1d1741);overflow:hidden}
+#timeline .blob{position:absolute;right:-120px;top:10%;width:460px;height:460px;border-radius:50%;background:conic-gradient(from 90deg,var(--iris),var(--blush),var(--glacier),var(--iris));filter:blur(70px);opacity:.35;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tl{position:relative;margin-top:60px;max-width:860px;border-left:1px solid var(--line);padding-left:0}
+.ev{position:relative;padding:0 0 38px 44px;cursor:pointer}
+.ev::before{content:'';position:absolute;left:-7px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--night);border:1px solid #fff;transition:.3s}
+.ev:hover::before,.ev.open::before{background:var(--iris);border-color:var(--iris);box-shadow:0 0 0 6px #c5b8ff33}
+.ev .row{display:grid;grid-template-columns:150px 1fr auto;gap:18px;align-items:baseline}
+.ev h4{font-family:var(--serif);font-weight:500;font-size:1.35rem}.ev small{display:block;font-family:var(--mono);font-size:11px;color:var(--glacier);margin-top:3px}
+.ev .plus{font-family:var(--mono);transition:.3s;opacity:.6}.ev.open .plus{transform:rotate(45deg)}
+.ev .more{max-height:0;overflow:hidden;transition:max-height .5s;font-weight:300;font-size:14px;opacity:.8;margin-left:168px}.ev.open .more{max-height:200px;padding-top:12px}
+/* lab */
+#lab{background:var(--pearl)}.lab-grid{display:grid;grid-template-columns:.8fr 1.4fr;gap:50px;align-items:center}
+.ctrl{margin-top:26px;padding:24px;border-radius:22px;background:var(--ink);color:var(--pearl);display:grid;gap:16px}
+.ctrl label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;margin-bottom:4px}.ctrl input{width:100%;accent-color:var(--iris)}
+.ctrl button{padding:10px;border:1px solid var(--line);border-radius:12px;font-family:var(--mono);font-size:10px;letter-spacing:.1em}.ctrl button:hover{background:var(--iris);color:var(--ink)}
+.canvas-box{height:440px;border-radius:30px;overflow:hidden;background:linear-gradient(135deg,var(--night),#3a2f78);position:relative}
+.canvas-box canvas{width:100%;height:100%;display:block}.canvas-box span{position:absolute;top:16px;left:18px;color:#fff9}
+/* contact */
+#contact{min-height:90vh;display:flex;align-items:center;text-align:center;color:#fff;overflow:hidden;background:linear-gradient(180deg,#1d1741,#4c3d95 55%,#c58fc8 100%)}
+#contact h2{font-size:clamp(2.6rem,6.5vw,6rem);margin:18px 0 22px}#contact h2 em{color:var(--blush)}
+#contact p{max-width:480px;margin:0 auto 38px;font-weight:300;opacity:.85}
+.links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.orb{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#c5b8ff88 40%,#a9ddf455);animation:drift 12s ease-in-out infinite;opacity:.7}
+@keyframes drift{50%{transform:translate(30px,-40px)}}
+footer{background:#c58fc8;color:#fff;text-align:center;padding:0 0 26px;font-size:10px;opacity:.9}
+/* modal */
+.modal{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:20px;background:#0d0b20cc;backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:.3s}
+.modal.show{opacity:1;pointer-events:auto}
+.mbox{width:100%;max-width:1000px;max-height:90vh;overflow:auto;background:var(--night);color:var(--pearl);border-radius:28px;border:1px solid var(--line);padding:40px;transform:translateY(24px) scale(.98);transition:.4s}
+.modal.show .mbox{transform:none}
+.mx{position:sticky;top:0;float:right;width:42px;height:42px;border-radius:50%;background:#ffffff1c;border:1px solid var(--line);z-index:2}.mx:hover{background:var(--iris);color:var(--ink)}
+.mbox h2{font-size:clamp(2rem,4vw,3.2rem);margin:10px 0}.mgrid{display:grid;grid-template-columns:1fr 2fr;gap:36px;margin:30px 0;padding:30px 0;border-block:1px solid var(--line)}
+.mside{display:grid;gap:18px;font-size:13px;align-content:start;padding:22px;border-radius:18px;background:#ffffff0a}.mside b{display:block;color:var(--iris);font-family:var(--mono);font-size:10px;letter-spacing:.14em;font-weight:400;margin-bottom:3px}
+.mmain h4{font-family:var(--serif);font-size:1.25rem;font-weight:500;margin-bottom:4px}.mmain p{font-weight:300;opacity:.85;font-size:14px;margin-bottom:18px}
+.vid{aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;margin:10px 0 26px}.vid iframe{width:100%;height:100%;border:0}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:10px}
+.shots figure{border-radius:14px;overflow:hidden;background:#ffffff0d;cursor:pointer}.shots img{width:100%;height:150px;object-fit:cover;transition:.4s}.shots figure:hover img{transform:scale(1.06)}.shots figcaption{padding:10px 12px;font-family:var(--mono);font-size:10px}
+#lb{z-index:70;flex-direction:column;gap:14px}#lb img{max-height:80vh;max-width:94vw;border-radius:16px;object-fit:contain}#lb p{color:#fff}
+.cursor{position:fixed;top:0;left:0;width:30px;height:30px;margin:-15px 0 0 -15px;border:1px solid #8e85e0;border-radius:50%;pointer-events:none;z-index:99;transition:width .2s,height .2s,margin .2s,background .2s;mix-blend-mode:difference}
+.cursor.h{width:56px;height:56px;margin:-28px 0 0 -28px;background:#c5b8ff55}
+@media(hover:none){.cursor{display:none}}
+@media(max-width:960px){
+nav{display:none}#menu-btn{display:block}
+nav.open{display:flex;position:fixed;inset:76px 16px auto;flex-direction:column;background:#1d1741ee;padding:26px;border-radius:24px;gap:18px;font-size:16px}
+.hero-grid,.about-grid,.lab-grid,.mgrid{grid-template-columns:1fr}.portal{margin:0 auto;max-width:420px}.hi,.lead{}.stack{display:none}
+.card,.card.wide,.card.big{grid-column:span 12}.card.big{flex-direction:column}.card.big .im{width:100%;min-height:230px}
+.scrap{height:480px}.ev .row{grid-template-columns:1fr}.ev .more{margin-left:0}.mbox{padding:24px}.sec{padding:80px 0}.scroll{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}html{scroll-behavior:auto}}
 
-    <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Three.js CDN for Interactive 3D Canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        pearl: {
-                            50: '#FBF9F6',
-                            100: '#F6F4F0',
-                            200: '#ECE8E1',
-                            300: '#DFD9CD',
-                        },
-                        lavender: {
-                            100: '#EAE8FA',
-                            200: '#D8D5F2',
-                            300: '#C4C0EC',
-                            400: '#A49CE0',
-                            500: '#8E85E0',
-                        },
-                        blush: {
-                            100: '#FBF0F3',
-                            200: '#F4E3E8',
-                            300: '#E8C8D5',
-                        },
-                        charcoal: {
-                            800: '#2A2A30',
-                            900: '#1A1A1E',
-                        },
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-12px) rotate(2deg)' },
-                        },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200% 0' },
-                            '100%': { backgroundPosition: '200% 0' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: 0.4 },
-                            '50%': { opacity: 0.8 },
-                        }
-                    },
-                    animation: {
-                        'float-slow': 'float 8s ease-in-out infinite',
-                        'shimmer': 'shimmer 4s linear infinite',
-                        'pulse-glow': 'pulseGlow 6s ease-in-out infinite',
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root {
-            --bg-primary: #FBF9F6;
-            --bg-secondary: #F6F4F0;
-            --text-primary: #1A1A1E;
-            --text-muted: #5A5A66;
-            --accent-lavender: #C4C0EC;
-            --accent-blush: #F4E3E8;
-            --border-color: rgba(26, 26, 30, 0.08);
-            --card-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.8);
-        }
-
-        .dark-theme {
-            --bg-primary: #121216;
-            --bg-secondary: #1A1A20;
-            --text-primary: #F4F4F8;
-            --text-muted: #9E9EB0;
-            --accent-lavender: #8E85E0;
-            --accent-blush: #734857;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --card-bg: rgba(26, 26, 32, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.12);
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.4s ease, color 0.4s ease;
-            overflow-x: hidden;
-            cursor: default;
-        }
-
-        .bg-grid-pattern {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(26, 26, 30, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(26, 26, 30, 0.03) 1px, transparent 1px);
-        }
-
-        .dark-theme .bg-grid-pattern {
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        }
-
-        .iridescent-border {
-            position: relative;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-        }
-
-        .iridescent-border::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(120deg, rgba(196,192,236,0.6), rgba(244,227,232,0.4), rgba(226,232,240,0.8), rgba(196,192,236,0.6));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-        .iridescent-border:hover::before {
-            opacity: 1;
-        }
-
-        #custom-cursor-dot, #custom-cursor-ring {
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
-            border-radius: 50%;
-            transition: transform 0.1s ease-out, opacity 0.2s ease;
-        }
-
-        #custom-cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: #8E85E0;
-        }
-
-        #custom-cursor-ring {
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(142, 133, 224, 0.5);
-            backdrop-filter: blur(1px);
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            a, button, input, select, [role="button"], .interactive-hover {
-                cursor: pointer;
-            }
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .title-display {
-            font-size: clamp(2.5rem, 6vw + 1rem, 6.5rem);
-            line-height: 0.92;
-            letter-spacing: -0.03em;
-        }
-
-        .case-modal-blur {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-    </style>
+/* ---- projects redesign ---- */
+.grid{gap:24px}
+.card{grid-column:span 4;background:#fff;border:1px solid #25243b14;border-radius:22px}
+.card .im{height:auto;aspect-ratio:16/10}.card .im img{object-position:top center}
+.card .bd{padding:20px 22px 22px;gap:10px}.card h3{font-size:1.3rem}
+.card .tools{align-self:flex-start;opacity:.8;border:1px solid #7c6bd655;color:#5a49b8;border-radius:99px;padding:4px 12px}
+.badge{position:absolute;top:14px;left:14px;z-index:2;font-style:normal;background:var(--pearl);color:var(--ink);padding:6px 12px;border-radius:99px;font-size:10px}
+.card.big{grid-column:span 8;flex-direction:row}.card.big .im{width:58%;aspect-ratio:auto;min-height:380px}
+.card.feat{grid-column:span 4;background:var(--ink);color:var(--pearl)}.card.feat .im{flex:1;aspect-ratio:auto;min-height:200px}
+.card.feat p{color:#f7f1e8cc}.card.feat .meta{color:var(--blush)}.card.feat .tools{color:var(--glacier);border-color:#a9ddf455}
+.grid.flt .card.big,.grid.flt .card.feat{grid-column:span 4;flex-direction:column;background:#fff;color:var(--ink)}
+.grid.flt .card.big .im,.grid.flt .card.feat .im{width:100%;min-height:0;flex:none;aspect-ratio:16/10}
+.grid.flt .card.big h3{font-size:1.3rem}.grid.flt .card.big .bd{padding:20px 22px 22px;justify-content:flex-start}
+.grid.flt .card.big p,.grid.flt .card.feat p{color:#25243bcc}.grid.flt .card.big .meta,.grid.flt .card.feat .meta{color:#7c6bd6}
+.grid.flt .card.big .tools,.grid.flt .card.feat .tools{color:#5a49b8;border-color:#7c6bd655}.grid.flt .badge{display:none}
+@media(max-width:1000px){.card,.grid.flt .card.big,.grid.flt .card.feat{grid-column:span 6}.card.big,.card.feat{grid-column:span 12}.card.big{flex-direction:column}.card.big .im{width:100%;min-height:0;aspect-ratio:16/10}.card.feat .im{flex:none;aspect-ratio:16/10}}
+@media(max-width:640px){.card,.grid.flt .card.big,.grid.flt .card.feat{grid-column:span 12}}
+/* ---- journey split ---- */
+.tl-split{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:56px}
+.tl-col>h3{font-family:var(--serif);font-weight:500;font-size:1.7rem;display:flex;align-items:center;gap:14px;margin-bottom:30px}
+.tl-col>h3 .mono{color:var(--iris);border:1px solid #c5b8ff55;border-radius:99px;padding:5px 12px}
+.tl{margin-top:0;max-width:none}
+.ev .row{grid-template-columns:1fr auto;align-items:start;gap:12px}
+.ev .yr{display:block;color:var(--iris);margin-bottom:6px}
+.ev .now{display:inline-block;margin-left:8px;background:var(--glacier);color:var(--night);border-radius:99px;padding:2px 9px;font-size:9px}
+.ev .more{margin-left:0}
+@media(max-width:900px){.tl-split{grid-template-columns:1fr;gap:48px}}
+.card .im video.pv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}.card .im.playing video.pv{opacity:1}
+.vid video{width:100%;height:100%;display:none;background:#000}
+.shots figure{position:relative}.shots video{width:100%;height:150px;object-fit:cover;display:block;pointer-events:none}
+.shots .play{position:absolute;top:10px;right:10px;background:#000a;color:#fff;border-radius:99px;padding:3px 10px;font-size:9px;letter-spacing:.1em}
+#lb video{display:none;max-height:80vh;max-width:94vw;border-radius:16px;background:#000}
+</style>
 </head>
-<body class="bg-grid-pattern selection:bg-lavender-200 selection:text-charcoal-900 min-h-screen flex flex-col font-sans antialiased">
+<body>
+<div class="cursor" id="cursor"></div>
+<header><div class="wrap">
+<a href="#hero" class="logo"><b>NA</b><span>Nur Atiqah Kamaruzzaman</span></a>
+<nav id="nav"><a href="#hero" class="on">Home</a><a href="#about">About</a><a href="#projects">Projects</a><a href="#timeline">Experience</a><a href="#lab">Play</a><a href="#contact">Contact</a></nav>
+<a class="pill" href="#contact" style="padding:9px 22px;font-size:12px">Let's Connect →</a>
+<button id="menu-btn" aria-label="Menu">☰</button>
+</div></header>
 
-    <div id="custom-cursor-dot" class="hidden md:block"></div>
-    <div id="custom-cursor-ring" class="hidden md:block"></div>
+<section id="hero"><div class="wrap hero-grid">
+<div>
+<p class="mono" style="opacity:.75;margin-bottom:14px">00 / Introduction</p>
+<p class="hi">Hi, I'm</p>
+<h1>Nur Atiqah <em>Kamaruzzaman ✦</em></h1>
+<p class="sub">Computer Science (Interactive Media) Student</p>
+<p class="lead">I build digital experiences where technology meets creativity — from code to interactive visuals.</p>
+<a href="#projects" class="pill solid">Explore my work →</a>
+</div>
+<div class="portal" id="portal">
+<div class="ring"></div>
+<div class="photo" id="photo"><img src="images/myphoto1.jpg" alt="Portrait of Nur Atiqah Kamaruzzaman"></div>
+<canvas id="ribbon"></canvas>
+<div class="tag" data-par="14">Creative<br>Developer<br>Designer</div>
+<div class="note hand" data-par="22" style="color:#fff">turn ideas into<br>interactive<br>experiences.</div>
+<div class="stack" data-par="10"><span>C++</span><span>Python</span><span>UI/UX</span><span>Blender</span><span>Unity</span></div>
+</div>
+</div>
+<div class="scroll mono"><i></i>Scroll to explore</div>
+</section>
 
-    <header class="fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300 backdrop-blur-md bg-pearl-50/80 dark:bg-charcoal-900/80 border-b border-charcoal-900/5 dark:border-white/5" id="main-header">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#hero" class="flex items-center gap-3 group">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-lavender-300 via-blush-200 to-white flex items-center justify-center shadow-sm border border-white/60 group-hover:scale-105 transition-transform">
-                    <span class="font-mono text-xs font-semibold tracking-tighter text-charcoal-900">NA</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-serif italic font-medium tracking-wide text-lg text-charcoal-900 dark:text-white leading-none">Nur Atiqah</span>
-                    <span class="font-mono text-[9px] uppercase tracking-widest text-charcoal-800/60 dark:text-gray-400 mt-1">Interactive Developer</span>
-                </div>
-            </a>
+<section id="about" class="dark sec"><div class="wrap about-grid">
+<div class="reveal">
+<div class="eyebrow mono">01 / Identity</div>
+<h2>About <em>Me ✦</em></h2>
+<p>I'm Atiqah, a Computer Science (Interactive Media) student based in Selangor who loves turning ideas into interactive experiences, web applications and creative visuals. A 3.99 GPA diploma in IT from Politeknik Sultan Idris Shah laid the foundation; now at UTeM I mix front-end code, Blender animation, cinematic camera work, VR and software QA.</p>
+<div class="chips"><span>Unity & VR</span><span>Blender 3D</span><span>Cinematic Camera</span><span>Python · PyQt5 · AI</span><span>Software Testing & QA</span><span>Illustrator</span></div>
+<p class="hand" style="margin-top:26px">detail-oriented · creative · curious · always learning</p>
+</div>
+<div class="scrap reveal">
+<div class="pol"><img src="images/my-photo1.png" alt="Nur Atiqah"><span>hello ✦</span></div>
+<div class="pol"><img src="images/DSC00871_JPG.jpeg" alt="Nur Atiqah with camera" style="object-position:35% 40%"><span>camera girl</span></div>
+<div class="pol"><img src="images/my-photo2.jpg" alt="Portrait session"><span>portraits</span></div>
+<div class="pol"><img src="images/my-photo3.jpeg" alt="Studio frame"><span>more dreams</span></div>
+<span class="hand">tame girl, more dreams ☺</span>
+</div>
+</div></section>
 
-            <nav class="hidden md:flex items-center gap-6 px-6 py-2 rounded-full iridescent-border text-xs font-mono tracking-wider uppercase">
-                <a href="#about" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">01 // About</a>
-                <a href="#projects" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">02 // Projects</a>
-                <a href="#timeline" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">03 // Timeline</a>
-                <a href="#lab" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">04 // Lab</a>
-                <a href="#contact" class="text-charcoal-800 dark:text-gray-200 hover:text-lavender-500 transition-colors">05 // Contact</a>
-            </nav>
+<section id="projects" class="sec"><div class="wrap">
+<div class="head reveal"><div><div class="eyebrow mono">02 / Selected Experiments</div><h2>Featured <em>Projects ✦</em></h2></div><p style="max-width:300px;font-size:14px;font-weight:300">Real projects. Real skills. Real growth. Click any card to open its story.</p></div>
+<div class="filters" id="filters">
+<button class="on" data-f="all">All</button><button data-f="ai">AI & ML</button><button data-f="3d">3D & Video</button><button data-f="vr">VR & Interactive</button><button data-f="web">Web</button><button data-f="mobile">Mobile & UI</button><button data-f="software">Software</button></div>
+<div class="grid" id="grid"></div>
+</div></section>
 
-            <div class="flex items-center gap-3">
-                <button id="theme-toggle" class="w-9 h-9 rounded-full iridescent-border flex items-center justify-center text-xs font-mono hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors" title="Toggle Theme Palette" aria-label="Toggle Theme">
-                    <span id="theme-icon">✦</span>
-                </button>
+<section id="timeline" class="dark sec"><div class="blob"></div><div class="wrap">
+<div class="eyebrow mono">03 / Process</div><h2>My <em>Journey ✦</em></h2>
+<div class="tl-split">
+<div class="tl-col"><h3>Education <span class="mono">Learning</span></h3><div class="tl" id="tl-edu"></div></div>
+<div class="tl-col"><h3>Experience <span class="mono">Working</span></h3><div class="tl" id="tl-exp"></div></div>
+</div>
+</div></section>
 
-                <a href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono bg-charcoal-900 text-pearl-50 hover:bg-lavender-500 transition-all shadow-sm">
-                    <span>LinkedIn</span>
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </a>
-            </div>
-        </div>
-    </header>
+<section id="lab" class="sec"><div class="wrap lab-grid">
+<div class="reveal"><div class="eyebrow mono">04 / Play</div><h2>Shader <em style="color:#7c6bd6">Playground</em></h2>
+<p style="margin-top:18px;font-weight:300;font-size:14px">An interactive generative canvas — sculpt the digital liquid. Move your cursor over it to disturb the waves.</p>
+<div class="ctrl">
+<div><label>Iridescence Speed <span id="v-s">1.0</span></label><input type="range" id="p-s" min=".1" max="3" step=".1" value="1"></div>
+<div><label>Wave Distortion <span id="v-d">20</span></label><input type="range" id="p-d" min="5" max="50" value="20"></div>
+<div><label>Particles <span id="v-p">40</span></label><input type="range" id="p-p" min="10" max="100" step="5" value="40"></div>
+<button id="reset">RESET PARAMETERS</button></div></div>
+<div class="canvas-box reveal"><canvas id="lab-canvas"></canvas><span class="mono">Live canvas // drag & hover</span></div>
+</div></section>
 
-    <section id="hero" class="relative min-h-screen pt-32 pb-16 px-6 flex flex-col justify-between max-w-7xl mx-auto">
-        <div class="flex flex-wrap items-center justify-between text-xs font-mono text-charcoal-800/60 dark:text-gray-400 gap-4 mb-6">
-            <div class="flex items-center gap-2">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>LOC: 03.15°N, 101.44°E // SELANGOR, MY</span>
-            </div>
-            <div class="px-3 py-1 rounded-full iridescent-border text-[10px] uppercase tracking-wider">
-                [ STATUS: AVAILABLE FOR CREATIVE COLLABORATION ]
-            </div>
-            <div>
-                <span>SOFT FUTURISM // PORTFOLIO 2026</span>
-            </div>
-        </div>
+<section id="contact"><div class="orb" style="width:180px;height:180px;left:8%;top:18%"></div><div class="orb" style="width:90px;height:90px;right:12%;top:24%;animation-delay:-4s"></div><div class="orb" style="width:130px;height:130px;right:22%;bottom:14%;animation-delay:-8s"></div>
+<div class="wrap" style="position:relative;z-index:2"><div class="mono" style="opacity:.8">05 / Connect</div>
+<h2>Let's create something <em>amazing together.</em></h2>
+<p>Open for creative media projects, interactive web design, VR experiences, AI applications and front-end roles.</p>
+<div class="links"><a class="pill solid" href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><button class="pill" id="copy"><span id="copy-t">Copy email address</span></button></div>
+<p class="mono" style="margin-top:50px;font-size:10px;opacity:.7">Selangor, Malaysia · UTC+8</p></div></section>
+<footer class="mono">© 2026 Nur Atiqah Kamaruzzaman · Code + Creativity = Better Experiences</footer>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
-            <div class="lg:col-span-7 z-10 space-y-6">
-                <div class="space-y-2">
-                    <p class="font-mono text-xs text-lavender-500 uppercase tracking-widest">// INTERACTIVE MEDIA & CREATIVE DEVELOPER</p>
-                    <h1 class="title-display font-serif font-light text-charcoal-900 dark:text-pearl-50">
-                        Nur Atiqah <br>
-                        <span class="italic font-normal text-lavender-500">Kamaruzzaman</span>
-                    </h1>
-                </div>
+<div class="modal" id="modal"><div class="mbox">
+<button class="mx" id="mx" aria-label="Close">✕</button>
+<div class="mono" style="color:var(--iris)"><span id="m-cat"></span> // <span id="m-year"></span></div>
+<h2 id="m-title"></h2><p id="m-tag" class="mono" style="opacity:.7"></p>
+<div class="mgrid"><div class="mside"><div><b>MY ROLE</b><span id="m-role"></span></div><div><b>TECH STACK</b><span id="m-stack"></span></div><div><b>CONTEXT</b><span id="m-ctx"></span></div></div>
+<div class="mmain"><h4>Project Brief & Concept</h4><p id="m-brief"></p><h4>Key Deliverables & Execution</h4><p id="m-exec"></p><h4>Reflection & Impact</h4><p id="m-ref"></p></div></div>
+<div id="m-vid"><span class="mono" style="opacity:.6">// Project demo walkthrough</span><div class="vid"><video id="m-mp4" controls playsinline preload="none"></video><iframe id="m-if" src="" title="Project Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+<span class="mono" style="opacity:.6">// Screenshots (click to enlarge)</span><div class="shots" id="shots"></div>
+</div></div>
+<div class="modal" id="lb"><button class="mx" id="lbx" style="position:absolute;top:20px;right:20px">✕</button><img id="lb-i" src="" alt=""><video id="lb-v" controls playsinline loop></video><p class="mono" id="lb-c"></p></div>
 
-                <p class="text-base sm:text-lg text-charcoal-800/80 dark:text-gray-300 max-w-xl font-light leading-relaxed">
-                    Synthesizing feminine elegance with digital experimentation. Specializing in interactive media, 3D Blender animation, cinematic camera direction, AI color sorting systems, and immersive VR experiences.
-                </p>
-
-                <div class="flex flex-wrap items-center gap-4 pt-4 font-mono text-xs">
-                    <a href="#projects" class="px-6 py-3.5 rounded-full bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 hover:bg-lavender-500 dark:hover:bg-lavender-300 hover:text-white transition-all shadow-lg flex items-center gap-3 group">
-                        <span>EXPLORE SELECTED WORK</span>
-                        <span class="group-hover:translate-x-1 transition-transform">↓</span>
-                    </a>
-
-                    <a href="#lab" class="px-6 py-3.5 rounded-full iridescent-border hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-all flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-blush-300"></span>
-                        <span>SHADER LAB EXPERIMENT</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5 relative h-[380px] sm:h-[480px] w-full flex items-center justify-center">
-                <div class="absolute inset-0 bg-gradient-to-tr from-lavender-200/40 via-blush-200/30 to-transparent rounded-full filter blur-3xl -z-10 animate-pulse-glow"></div>
-                <div id="canvas-container" class="w-full h-full rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing relative">
-                    <div class="absolute bottom-4 left-4 z-10 font-mono text-[10px] text-charcoal-800/60 dark:text-gray-400 bg-white/40 dark:bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/40">
-                        <span>INTERACTIVE ORB // DRAG OR HOVER</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 01 // ABOUT SECTION -->
-    <section id="about" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-5 flex flex-col items-center">
-                <div class="w-full max-w-md p-6 rounded-3xl bg-blush-100 dark:bg-charcoal-800 border-4 border-charcoal-900 dark:border-pearl-50 shadow-2xl relative space-y-6">
-                    <div class="flex items-center justify-between font-mono text-xs text-charcoal-900 dark:text-pearl-50">
-                        <span class="tracking-widest uppercase font-semibold">PORTRAIT ARCHIVE</span>
-                        <span id="carousel-counter" class="px-3 py-1 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 text-[10px]">01 / 03</span>
-                    </div>
-                    <div id="carousel-frame" class="w-full h-80 sm:h-96 rounded-2xl overflow-hidden relative border-2 border-charcoal-900/20 dark:border-white/20 group cursor-pointer bg-charcoal-900/5">
-                        <img id="carousel-image" src="" alt="Nur Atiqah Portrait" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <div class="flex items-center justify-center gap-4">
-                        <button id="carousel-prev" class="w-12 h-12 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 flex items-center justify-center shadow-md hover:scale-110 transition-transform text-base">←</button>
-                        <div class="flex gap-2" id="carousel-dots"></div>
-                        <button id="carousel-next" class="w-12 h-12 rounded-full bg-charcoal-900 text-pearl-50 dark:bg-pearl-50 dark:text-charcoal-900 flex items-center justify-center shadow-md hover:scale-110 transition-transform text-base">→</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-7 space-y-8">
-                <div>
-                    <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[01 // ABOUT ME & PHILOSOPHY]</div>
-                    <h2 class="text-4xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
-                        Bridging Human Elegance & <span class="italic font-normal text-lavender-500">Digital Tech</span>
-                    </h2>
-                </div>
-
-                <div class="space-y-4 text-sm text-charcoal-800/80 dark:text-gray-300 font-light leading-relaxed">
-                    <p>
-                        I am Nur Atiqah Kamaruzzaman, an Interactive Media student and creative developer based in Selangor, Malaysia. My practice revolves around bridging design aesthetics with rigorous software development, immersive 3D modeling, and AI-driven applications.
-                    </p>
-                    <p>
-                        With a foundation built through a 3.99 GPA Diploma in Information Technology from Politeknik Sultan Idris Shah and ongoing studies in Computer Science (Interactive Media) at UTeM, I combine front-end coding, Blender animation theory, cinematic camera techniques, VR interaction design, and software quality assurance to build memorable digital products.
-                    </p>
-                </div>
-
-                <div class="space-y-3 font-mono text-xs">
-                    <span class="text-charcoal-800/60 dark:text-gray-400 block">// CORE COMPETENCIES</span>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Unity & VR (Quest Hand-Tracking)</span>
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Blender 3D Modeling & Animation</span>
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Cinematic Camera Techniques</span>
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Python, PyQt5 & AI Color Sorting</span>
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Software Testing & QA</span>
-                        <span class="px-3 py-1.5 rounded-full iridescent-border">Vector Art & Illustrator</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 02 // PROJECTS SECTION -->
-    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div>
-                <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[02 // PORTFOLIO ARCHIVE]</div>
-                <h2 class="text-4xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
-                    Selected <span class="italic font-normal">Works & Projects</span>
-                </h2>
-            </div>
-            
-            <p class="text-xs font-mono text-charcoal-800/60 dark:text-gray-400 max-w-xs">
-                Comprehensive archive featuring video demonstrations, interactive screenshot galleries, and VR interaction modules.
-            </p>
-        </div>
-
-        <!-- CATEGORY FILTER BUTTONS -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-12 no-scrollbar font-mono text-xs">
-            <button class="filter-btn active px-4 py-2 rounded-full border border-charcoal-900 dark:border-pearl-50 bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 transition-all whitespace-nowrap" data-filter="all">ALL [10]</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="ai">AI & ML</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="3d">3D & VIDEO</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="vr">VR & INTERACTIVE</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="web">WEB DEVELOPMENT</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="mobile">MOBILE & UI</button>
-            <button class="filter-btn px-4 py-2 rounded-full border border-charcoal-900/20 dark:border-white/20 hover:border-lavender-400 transition-all whitespace-nowrap" data-filter="software">SOFTWARE & PYTHON</button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8" id="projects-grid">
-            
-            <!-- Project 1: Handal VR -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="vr" data-id="1">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-lavender-500/20 text-lavender-500 border border-lavender-500/30">UNITY / VR</span>
-                        <span class="font-mono text-xs text-lavender-500">2023 // FYP</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/handalvr1.png" alt="Handal VR" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Handal VR: Hand Gestures</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Immersive VR environment built on Unity utilizing Quest hand-tracking gestures.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">UNITY / QUEST</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 2: Color Sorting Helper (AI Project) -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="ai" data-id="2">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">PYTHON / AI</span>
-                        <span class="font-mono text-xs text-indigo-400">2026 // DEGREE</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/ai.png" alt="AI Color Sorting" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">The Color Sorting Helper (AI Project)</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Interactive AI learning tool for children built on PyQt5 and Teachable Machine.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">PYTHON / TENSORFLOW</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 3: Computer Animation Blender -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="3d" data-id="3">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-teal-500/20 text-teal-400 border border-teal-500/30">BLENDER</span>
-                        <span class="font-mono text-xs text-teal-400">2026 // DEGREE</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/animation1.png" alt="Blender Animation" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Computer Animation Project</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Custom 3D character modeling, rigging, and animation cycle developed in Blender.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">BLENDER 3D</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 4: Personality Walk Video -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="3d" data-id="4">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-400 border border-amber-500/30">VIDEO TECH</span>
-                        <span class="font-mono text-xs text-amber-400">2026 // DEGREE</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/pw.png" alt="Personality Walk" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Personality Walk Video</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Assignment showcasing 9 distinct cinematic camera movement techniques.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">VIDEO TECH</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 5: Guess The Nature -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="vr" data-id="5">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">UNITY / ART</span>
-                        <span class="font-mono text-xs text-emerald-400">2022 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/guessthenature.jpg" alt="Guess The Nature" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Guess The Nature</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Educational mobile game featuring custom vector artwork created in Adobe Illustrator.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">UNITY / ILLUSTRATOR</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 6: Residential College Info Portal -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="mobile" data-id="6">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-blue-500/20 text-blue-400 border border-blue-500/30">ANDROID</span>
-                        <span class="font-mono text-xs text-blue-400">2022 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/mobile.jpg" alt="Residential Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Residential College Info Portal</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Mobile application designed for college hostel residential management.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">ANDROID / JAVA</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 7: Best Holiday Destination Portal -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="web" data-id="7">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-400 border border-amber-500/30">WEB DEV</span>
-                        <span class="font-mono text-xs text-amber-400">2022 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/bh (1).jpg" alt="Tourism Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Best Holiday Destination Portal</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Interactive web portal highlighting Malaysia's prime tourism locations.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">FRONTEND WEB</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 8: Registration Vaccination Portal -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="web" data-id="8">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-violet-500/20 text-violet-400 border border-violet-500/30">PHP / MYSQL</span>
-                        <span class="font-mono text-xs text-violet-400">2022 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/vaccine.jpg" alt="Vaccination Portal" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Registration Vaccination Portal</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Web-based public health registration portal providing citizen appointment schedules.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">FULL-STACK WEB</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 9: Tuition Registration System -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="software" data-id="9">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-purple-500/20 text-purple-400 border border-purple-500/30">PYTHON</span>
-                        <span class="font-mono text-xs text-purple-400">2021 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/ts (3).jpg" alt="Tuition System" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Tuition Registration System</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Python GUI application for tuition centers to oversee student enrollment.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">PYTHON DESKTOP</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-            <!-- Project 10: Car Rental Management -->
-            <div class="project-card lg:col-span-4 group iridescent-border rounded-3xl p-6 flex flex-col justify-between transition-all hover:-translate-y-1.5 duration-300 cursor-pointer" data-category="software" data-id="10">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-3 py-1 rounded-full text-[10px] font-mono bg-zinc-500/20 text-zinc-300 border border-zinc-500/30">JAVA</span>
-                        <span class="font-mono text-xs text-zinc-400">2021 // DIPLOMA</span>
-                    </div>
-                    <div class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 relative group/slot bg-black/15">
-                        <img src="images/cr (1).jpg" alt="Car Rental" class="w-full h-full object-cover group-hover/slot:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover/slot:opacity-100 transition-opacity flex items-center justify-center font-mono text-xs text-white text-center p-4">
-                            [ CLICK TO VIEW CASE STUDY & GALLERY ]
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-serif font-medium text-charcoal-900 dark:text-pearl-50">Car Rental Management</h3>
-                    <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">Java-based fleet management application handling vehicle availability and agreements.</p>
-                </div>
-                <div class="pt-6 mt-6 border-t border-charcoal-900/10 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                    <span class="text-charcoal-800/60 dark:text-gray-400">JAVA DESKTOP</span>
-                    <span class="text-lavender-500 hover:underline">EXPLORE ↗</span>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- 03 // TIMELINE SECTION -->
-    <section id="timeline" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
-        <div class="mb-16">
-            <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[03 // ACADEMIC & PROFESSIONAL TIMELINE]</div>
-            <h2 class="text-4xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
-                Education & <span class="italic font-normal">Experience</span>
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div class="space-y-6">
-                <div class="flex items-center gap-2 font-mono text-xs text-lavender-500">
-                    <span>🎓 ACADEMIC FOUNDATION</span>
-                    <div class="h-[1px] flex-grow bg-charcoal-900/10 dark:border-white/10"></div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Universiti Teknikal Malaysia Melaka (UTeM)</h4>
-                                <p class="text-xs text-lavender-500 font-mono">Bachelor Degree of Computer Science (Interactive Media)</p>
-                            </div>
-                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Sep 2025 – Sep 2027</span>
-                        </div>
-                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
-                            Specializing in immersive virtual reality, Blender 3D animation, digital audio and video camera techniques, AI image classifiers, and interactive media UX.
-                        </p>
-                    </div>
-
-                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Politeknik Sultan Idris Shah</h4>
-                                <p class="text-xs text-lavender-500 font-mono">Diploma in Information Technology — <span class="text-emerald-500 font-semibold">GPA: 3.99</span></p>
-                            </div>
-                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Mar 2021 – Jun 2023</span>
-                        </div>
-                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
-                            Graduated with distinction (3.99 GPA). Developed strong software engineering foundations across Java, Web, Mobile Applications, and Python development.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div class="flex items-center gap-2 font-mono text-xs text-lavender-500">
-                    <span>💼 PROFESSIONAL EXPERIENCE</span>
-                    <div class="h-[1px] flex-grow bg-charcoal-900/10 dark:border-white/10"></div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">AY Global Ventures</h4>
-                                <p class="text-xs text-lavender-500 font-mono">Crew Event (Part-time)</p>
-                            </div>
-                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Aug 2026 – Sep 2026</span>
-                        </div>
-                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
-                            Managed event operations, guest experience design, and visual setup for corporate activation events in Klang, Selangor.
-                        </p>
-                    </div>
-
-                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">Bugz Studio Sdn Bhd</h4>
-                                <p class="text-xs text-lavender-500 font-mono">Software Tester (Full-time)</p>
-                            </div>
-                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Jan 2024 – Sep 2025</span>
-                        </div>
-                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
-                            Led software quality assurance testing, user acceptance testing (UAT), regression testing pipelines, and UI consistency verification across software releases.
-                        </p>
-                    </div>
-
-                    <div class="iridescent-border p-6 rounded-2xl space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-serif text-xl font-medium text-charcoal-900 dark:text-pearl-50">CARA COM MY SDN BHD</h4>
-                                <p class="text-xs text-lavender-500 font-mono">Frontend Developer Intern</p>
-                            </div>
-                            <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400">Jan 2022 – Jun 2022</span>
-                        </div>
-                        <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light">
-                            Built responsive client web interfaces using modern HTML, CSS, and JavaScript. Collaborated with UI designers to transform graphic mockups into code.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 04 // LAB SECTION -->
-    <section id="lab" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
-        <div class="flex flex-col lg:flex-row gap-12 items-start">
-            <div class="lg:w-1/3 space-y-6">
-                <div>
-                    <div class="font-mono text-xs text-lavender-500 uppercase tracking-widest mb-2">[04 // CREATIVE CODING LAB]</div>
-                    <h2 class="text-3xl sm:text-4xl font-serif font-light text-charcoal-900 dark:text-pearl-50">
-                        Soft Futurism <br><span class="italic font-normal">Shader Experiment</span>
-                    </h2>
-                </div>
-
-                <p class="text-xs text-charcoal-800/70 dark:text-gray-300 font-light leading-relaxed">
-                    An interactive generative canvas evaluating fluid displacement, chromatic iridescence, and wave physics in real time. Adjust parameters below to sculpt the digital liquid.
-                </p>
-
-                <div class="space-y-4 p-6 rounded-2xl iridescent-border font-mono text-xs">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span>Iridescence Speed</span>
-                            <span id="val-speed">1.0</span>
-                        </div>
-                        <input type="range" id="param-speed" min="0.1" max="3.0" step="0.1" value="1.0" class="w-full accent-lavender-500 cursor-pointer">
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span>Liquid Waves Distortion</span>
-                            <span id="val-distortion">20.0</span>
-                        </div>
-                        <input type="range" id="param-distortion" min="5" max="50" step="1" value="20" class="w-full accent-lavender-500 cursor-pointer">
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span>Particle Dispersion</span>
-                            <span id="val-particles">40</span>
-                        </div>
-                        <input type="range" id="param-particles" min="10" max="100" step="5" value="40" class="w-full accent-lavender-500 cursor-pointer">
-                    </div>
-
-                    <button id="reset-lab" class="w-full py-2.5 rounded-xl border border-charcoal-900/20 dark:border-white/20 hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors text-[10px] uppercase tracking-wider">
-                        RESET PARAMETERS
-                    </button>
-                </div>
-            </div>
-
-            <div class="lg:w-2/3 w-full h-[420px] rounded-3xl overflow-hidden iridescent-border relative">
-                <canvas id="lab-canvas" class="w-full h-full block"></canvas>
-                <div class="absolute top-4 left-4 font-mono text-[10px] text-charcoal-800/60 dark:text-gray-400 bg-white/50 dark:bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-md">
-                    <span>LIVE CANVAS GENERATOR // CANVAS2D SHADER</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 05 // CONTACT SECTION -->
-    <section id="contact" class="py-24 px-6 max-w-7xl mx-auto border-t border-charcoal-900/10 dark:border-white/10">
-        <div class="iridescent-border rounded-3xl p-8 sm:p-16 relative overflow-hidden text-center space-y-8">
-            <div class="absolute inset-0 bg-gradient-to-tr from-lavender-200/30 via-blush-200/20 to-transparent pointer-events-none"></div>
-
-            <div class="space-y-4 max-w-2xl mx-auto relative z-10">
-                <span class="font-mono text-xs text-lavender-500 uppercase tracking-widest">[05 // INITIATE COLLABORATION]</span>
-                <h2 class="text-4xl sm:text-6xl font-serif font-light text-charcoal-900 dark:text-pearl-50 leading-tight">
-                    Let's build something <br><span class="italic font-normal text-lavender-500">surreal together.</span>
-                </h2>
-                <p class="text-sm text-charcoal-800/70 dark:text-gray-300 font-light">
-                    Open for creative media projects, interactive web design, VR experiences, AI applications, and front-end development roles.
-                </p>
-            </div>
-
-            <div class="flex flex-wrap items-center justify-center gap-4 relative z-10 font-mono text-xs">
-                <a href="https://www.linkedin.com/in/nur-atiqah-kamaruzzaman-656782250/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full bg-charcoal-900 dark:bg-pearl-50 text-pearl-50 dark:text-charcoal-900 hover:bg-lavender-500 transition-all shadow-lg flex items-center gap-3">
-                    <span>CONNECT ON LINKEDIN</span>
-                    <span>↗</span>
-                </a>
-
-                <button id="copy-email-btn" class="px-8 py-4 rounded-full iridescent-border hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-all flex items-center gap-2">
-                    <span id="copy-text">COPY EMAIL ADDRESS</span>
-                    <span id="copy-icon">📋</span>
-                </button>
-            </div>
-
-            <div class="pt-8 text-xs font-mono text-charcoal-800/50 dark:text-gray-500">
-                <span>SELANGOR, MALAYSIA // KUALA LUMPUR TIME ZONE (UTC+8)</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- FULL PROJECT MODAL (CASE STUDY + VIDEO + GALLERIES) -->
-    <div id="full-project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300 case-modal-blur bg-black/70">
-        <div class="w-full max-w-5xl max-h-[90vh] bg-white dark:bg-charcoal-900 rounded-3xl iridescent-border overflow-y-auto p-6 sm:p-10 space-y-8 relative shadow-2xl">
-            <button id="close-modal-btn" class="sticky top-0 float-right w-10 h-10 rounded-full iridescent-border flex items-center justify-center font-mono text-sm hover:bg-lavender-100 dark:hover:bg-charcoal-800 transition-colors z-20 bg-white/80 dark:bg-charcoal-900/80 backdrop-blur-md">
-                ✕
-            </button>
-
-            <!-- Modal Header -->
-            <div class="space-y-3 pt-2 border-b border-charcoal-900/10 dark:border-white/10 pb-6">
-                <div class="flex items-center gap-3 font-mono text-xs text-lavender-500 uppercase tracking-widest">
-                    <span id="modal-category">CATEGORY</span>
-                    <span>//</span>
-                    <span id="modal-year">YEAR</span>
-                </div>
-                <h2 id="modal-title" class="text-3xl sm:text-5xl font-serif font-light text-charcoal-900 dark:text-pearl-50">Project Title</h2>
-                <p id="modal-tagline" class="text-sm font-mono text-charcoal-800/70 dark:text-gray-400">Tagline overview</p>
-            </div>
-
-            <!-- Case Study Detail Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 text-xs font-mono border-b border-charcoal-900/10 dark:border-white/10 pb-8">
-                <div class="md:col-span-4 space-y-4 p-6 rounded-2xl bg-pearl-100/50 dark:bg-charcoal-800/50 border border-charcoal-900/5 dark:border-white/5">
-                    <div>
-                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">MY ROLE</span>
-                        <span id="modal-role" class="text-charcoal-900 dark:text-pearl-50 font-medium">Role description</span>
-                    </div>
-                    <div>
-                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">TECH STACK</span>
-                        <span id="modal-stack" class="text-charcoal-900 dark:text-pearl-50">Tech stack list</span>
-                    </div>
-                    <div>
-                        <span class="text-charcoal-800/50 dark:text-gray-500 block mb-1">INSTITUTION / CONTEXT</span>
-                        <span id="modal-context" class="text-charcoal-900 dark:text-pearl-50">UTeM / Politeknik</span>
-                    </div>
-                </div>
-
-                <div class="md:col-span-8 space-y-6 text-sm font-sans font-light text-charcoal-800/80 dark:text-gray-300 leading-relaxed">
-                    <div>
-                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Project Brief & Concept</h4>
-                        <p id="modal-brief">Detailed brief goes here...</p>
-                    </div>
-                    <div>
-                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Key Deliverables & Execution</h4>
-                        <p id="modal-execution">Execution details...</p>
-                    </div>
-                    <div>
-                        <h4 class="font-serif text-lg font-medium text-charcoal-900 dark:text-pearl-50 mb-2">Reflection & Impact</h4>
-                        <p id="modal-reflection">Reflection text...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Video Demo Container -->
-            <div class="space-y-3" id="modal-video-container">
-                <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400 uppercase tracking-wider">// YOUTUBE PROJECT DEMO WALKTHROUGH</span>
-                <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 bg-black">
-                    <iframe id="modal-iframe" class="w-full h-full" src="" title="Project Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; webshare" allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <!-- Screenshots Gallery Grid -->
-            <div class="space-y-3">
-                <span class="font-mono text-xs text-charcoal-800/60 dark:text-gray-400 uppercase tracking-wider">// IN-GAME / MODULE SCREENSHOTS (CLICK TO VIEW LARGER)</span>
-                <div id="modal-screenshots-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lightbox Modal for Screenshots -->
-    <div id="lightbox-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-        <button id="lightbox-close" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-lg hover:bg-white/40 transition-colors z-10">✕</button>
-        <div class="max-w-5xl max-h-[90vh] relative flex flex-col items-center">
-            <img id="lightbox-img" src="" alt="Enlarged Visual" class="max-w-full max-h-[80vh] rounded-2xl object-contain border-2 border-white/20 shadow-2xl">
-            <p id="lightbox-caption" class="text-white font-mono text-xs mt-4 tracking-wider text-center"></p>
-        </div>
-    </div>
-
-    <script>
-        const portraitSlides = [
-            { url: "images/my-photo1.png", caption: "01 // Nur Atiqah Kamaruzzaman" },
-            { url: "images/my-photo2.jpg", caption: "02 // Portrait Session" },
-            { url: "images/my-photo3.jpeg", caption: "03 // Studio Frame" }
-        ];
-
-        let currentSlideIndex = 0;
-        function initCarousel() {
-            const imgEl = document.getElementById('carousel-image');
-            const counterEl = document.getElementById('carousel-counter');
-            const dotsContainer = document.getElementById('carousel-dots');
-            if (!imgEl) return;
-
-            dotsContainer.innerHTML = '';
-            portraitSlides.forEach((_, idx) => {
-                const dot = document.createElement('button');
-                dot.className = `w-3 h-3 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-charcoal-900 dark:bg-pearl-50 scale-125' : 'bg-charcoal-900/30 dark:bg-pearl-50/30'}`;
-                dot.addEventListener('click', () => { currentSlideIndex = idx; updateCarousel(); });
-                dotsContainer.appendChild(dot);
-            });
-
-            function updateCarousel() {
-                const slide = portraitSlides[currentSlideIndex];
-                imgEl.src = slide.url;
-                counterEl.textContent = `0${currentSlideIndex + 1} / 0${portraitSlides.length}`;
-                Array.from(dotsContainer.children).forEach((d, idx) => {
-                    d.className = `w-3 h-3 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-charcoal-900 dark:bg-pearl-50 scale-125' : 'bg-charcoal-900/30 dark:bg-pearl-50/30'}`;
-                });
-            }
-            updateCarousel();
-
-            document.getElementById('carousel-prev')?.addEventListener('click', () => {
-                currentSlideIndex = (currentSlideIndex - 1 + portraitSlides.length) % portraitSlides.length;
-                updateCarousel();
-            });
-            document.getElementById('carousel-next')?.addEventListener('click', () => {
-                currentSlideIndex = (currentSlideIndex + 1) % portraitSlides.length;
-                updateCarousel();
-            });
-        }
-
-        const fullCaseStudyData = {
+<script>
+const fullCaseStudyData = {
+            '11': {
+                title: "Workshop 2 (Short Film Project)",
+                category: "SHORT FILM & VIDEO",
+                year: "2026 // DEGREE PROJECT",
+                tagline: "Collaborative Short Film Production & Directing",
+                role: "Director & Video Editor",
+                stack: "Premiere Pro, After Effects, Cinematic Camera, Scriptwriting",
+                context: "Universiti Teknikal Malaysia Melaka (UTeM)",
+                brief: "Produced a narrative short film centered around creative storytelling, visual editing, sound design, and professional camera directing.",
+                execution: "Managed storyboarding, character casting, filming angles, lighting setups, and multi-track audio/video editing in Adobe Premiere Pro.",
+                reflection: "Strengthened collaborative leadership and cinematic timing in video production pipelines.",
+                video: "https://www.youtube.com/embed/6n_wDeIMR58",
+                screenshots: [
+                    { src: "images/pw.png", caption: "01 // Short Film Production Still" },
+                    { src: "images/pw2.png", caption: "02 // Behind the Scenes / Editing Timeline" }
+                ]
+            },
             '1': {
                 title: "Handal VR: Hand Gestures",
                 category: "VIRTUAL REALITY",
@@ -926,8 +319,10 @@
                 reflection: "Successfully integrated deep learning image classifiers into a child-friendly desktop interface with multi-threaded speech output.",
                 video: "",
                 screenshots: [
-                    { src: "images/ai-color.png", caption: "01 // Main AI Classification Dashboard" },
-                    { src: "images/1000002142_330b014f6c3ab9338209ac37b6316524-23_10_2023, 23_04_04.jpg", caption: "02 // Live Camera Feed & Confidence Rating" }
+                    { src: "images/ai.png", caption: "01 // Main AI Classification Dashboard" },
+                    { src: "videos/ai.mp4", caption: "02 // Live Camera Feed & Confidence Rating" },
+                    { src: "images/ai2.png", caption: "03 // Color Sorting Feedback & Emoji Response" },
+                    { src: "images/ai3.png", caption: "04 // Training Results & Performance Metrics" },
                 ]
             },
             '3': {
@@ -943,8 +338,9 @@
                 reflection: "Gained mastery over clean edge flow topology, bone weight assignment, and keyframe animation curves in Blender.",
                 video: "https://www.youtube.com/embed/l9-7Vy-u8Gw",
                 screenshots: [
-                    { src: "images/blender-anim.png", caption: "01 // Character Rigging & Mesh Topology" },
-                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Keyframe Walk Cycle Render" }
+                    { src: "images/animation1.png", caption: "01 // Character Rigging & Mesh Topology" },
+                    { src: "videos/animation.mp4", caption: "02 // Animation Project Preview" },
+                    { src: "videos/animation2.mp4", caption: "03 // Keyframe Walk Cycle Render" }
                 ]
             },
             '4': {
@@ -960,8 +356,9 @@
                 reflection: "Deepened professional command over cinematic framing, smooth physical camera transitions, and storytelling through spatial motion.",
                 video: "https://www.youtube.com/embed/6n_wDeIMR58",
                 screenshots: [
-                    { src: "images/pw2.png", caption: "01 // Cinematic Tracking & Framing" },
-                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Step-in Reveal Shot" }
+                    { src: "videos/dav.mp4", caption: "01 // Cinematic Tracking & Framing" },
+                    { src: "videos/dav2.mp4", caption: "02 // The Mini Jib Reveal Shot" },
+                    { src: "videos/dav3.mp4", caption: "03 // The Wipe Transition" }
                 ]
             },
             '5': {
@@ -977,8 +374,9 @@
                 reflection: "Enhanced cross-platform asset optimization and user-friendly interface design for children.",
                 video: "",
                 screenshots: [
-                    { src: "images/guessthenature2.jpg", caption: "01 // Quiz & Match-up Game Screen" },
-                    { src: "images/guessthenature3.jpg", caption: "02 // Adobe Illustrator Vector Design" }
+                    { src: "images/guessthenature.jpg", caption: "01 // Home Screen" },
+                    { src: "images/guessthenature2.jpg", caption: "02 // Menu Screen" },
+                    { src: "images/guessthenature3.jpg", caption: "03 // Quiz & Match-up Game Screen" }
                 ]
             },
             '6': {
@@ -994,8 +392,9 @@
                 reflection: "Improved database CRUD connectivity and mobile UX layouts.",
                 video: "",
                 screenshots: [
-                    { src: "images/residentialapp.png", caption: "01 // Mobile App Interface" },
-                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Student Registration Module" }
+                    { src: "images/mobile.jpg", caption: "01 // Mobile App Interface" },
+                    { src: "images/mobile2.jpg", caption: "02 // Main Screen" },
+                    { src: "images/mobile3.jpg", caption: "03 // Student Registration Module" }
                 ]
             },
             '7': {
@@ -1011,8 +410,9 @@
                 reflection: "Mastered responsive grid layouts and web typography.",
                 video: "",
                 screenshots: [
-                    { src: "images/tourismportal.png", caption: "01 // Tourism Landing Page" },
-                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Destination Details Grid" }
+                    { src: "images/bh (1).jpg", caption: "01 // Tourism Landing Page" },
+                    { src: "images/bh (3).jpg", caption: "02 // Destination Details Grid" },
+                    { src: "images/bh (2).jpg", caption: "03 // Interactive Map & Activity Highlights" }
                 ]
             },
             '8': {
@@ -1028,8 +428,9 @@
                 reflection: "Strengthened web security practices and relational database normalization.",
                 video: "",
                 screenshots: [
-                    { src: "images/vaccine2.jpg", caption: "01 // Citizen Registration Dashboard" },
-                    { src: "images/vaccine3.jpg", caption: "02 // Healthcare Provider View" }
+                    { src: "images/vaccine.jpg", caption: "01 // Home Screen" },
+                    { src: "images/vaccine2.jpg", caption: "02 // Login Screen" },
+                    { src: "images/vaccine3.jpg", caption: "03 // Registration Form" }
                 ]
             },
             '9': {
@@ -1045,8 +446,9 @@
                 reflection: "Gained core desktop GUI architecture experience.",
                 video: "",
                 screenshots: [
-                    { src: "images/tuitionsystem.png", caption: "01 // Enrollment GUI Form" },
-                    { src: "images/1000002143_90ea82c3b6c72a53d2ca2051226f8fea-23_10_2023, 23_04_04.jpg", caption: "02 // Subject & Fee Management" }
+                    { src: "images/ts (3).jpg", caption: "01 // Enrollment GUI Form" },
+                    { src: "images/ts (1).jpg", caption: "02 // Login Screen" },
+                    { src: "images/ts (2).jpg", caption: "03 // Student Subject Management" }
                 ]
             },
             '10': {
@@ -1062,297 +464,87 @@
                 reflection: "Solidified object-oriented programming patterns in Java.",
                 video: "",
                 screenshots: [
-                    { src: "images/carrental.png", caption: "01 // Vehicle Inventory View" },
-                    { src: "images/1000002144_d2a46fa7357201c816ac5474f4e8e712-23_10_2023, 23_04_05.jpg", caption: "02 // Rental Calculation Summary" }
+                    { src: "images/cr (1).jpg", caption: "01 // Vehicle Inventory View" },
+                    { src: "images/cr (3).jpg", caption: "02 // Login Screen" },
+                    { src: "images/cr (2).jpg", caption: "03 // Manage Customer Rentals" }
                 ]
             }
         };
-
-        function initHero3DCanvas() {
-            const container = document.getElementById('canvas-container');
-            if (!container) return;
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 5;
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            const geometry = new THREE.TorusKnotGeometry(1.1, 0.38, 128, 32);
-            const material = new THREE.MeshPhysicalMaterial({
-                color: 0xC4C0EC,
-                metalness: 0.85,
-                roughness: 0.15,
-                clearcoat: 1.0,
-                clearcoatRoughness: 0.1,
-                reflectivity: 0.9,
-                wireframe: false
-            });
-
-            const torusMesh = new THREE.Mesh(geometry, material);
-            scene.add(torusMesh);
-
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            scene.add(ambientLight);
-
-            const pointLight1 = new THREE.PointLight(0x8E85E0, 2, 50);
-            pointLight1.position.set(5, 5, 5);
-            scene.add(pointLight1);
-
-            const pointLight2 = new THREE.PointLight(0xF4E3E8, 2, 50);
-            pointLight2.position.set(-5, -5, -5);
-            scene.add(pointLight2);
-
-            let mouseX = 0, mouseY = 0;
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
-                mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
-            });
-
-            function animate() {
-                requestAnimationFrame(animate);
-                torusMesh.rotation.x += 0.005;
-                torusMesh.rotation.y += 0.008;
-                torusMesh.rotation.y += (mouseX * 0.5 - torusMesh.rotation.y) * 0.05;
-                torusMesh.rotation.x += (-mouseY * 0.5 - torusMesh.rotation.x) * 0.05;
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                if (!container) return;
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-        }
-
-        function initGenerativeLabCanvas() {
-            const canvas = document.getElementById('lab-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-
-            function resize() {
-                canvas.width = canvas.parentElement.clientWidth;
-                canvas.height = canvas.parentElement.clientHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            let speed = 1.0;
-            let distortion = 20;
-            let particleCount = 40;
-            let time = 0;
-
-            document.getElementById('param-speed')?.addEventListener('input', (e) => {
-                speed = parseFloat(e.target.value);
-                document.getElementById('val-speed').textContent = speed.toFixed(1);
-            });
-            document.getElementById('param-distortion')?.addEventListener('input', (e) => {
-                distortion = parseFloat(e.target.value);
-                document.getElementById('val-distortion').textContent = distortion;
-            });
-            document.getElementById('param-particles')?.addEventListener('input', (e) => {
-                particleCount = parseInt(e.target.value);
-                document.getElementById('val-particles').textContent = particleCount;
-            });
-
-            document.getElementById('reset-lab')?.addEventListener('click', () => {
-                speed = 1.0;
-                distortion = 20;
-                particleCount = 40;
-                document.getElementById('param-speed').value = 1.0;
-                document.getElementById('param-distortion').value = 20;
-                document.getElementById('param-particles').value = 40;
-                document.getElementById('val-speed').textContent = "1.0";
-                document.getElementById('val-distortion').textContent = "20";
-                document.getElementById('val-particles').textContent = "40";
-            });
-
-            function render() {
-                time += 0.01 * speed;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                for (let i = 0; i < 4; i++) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, canvas.height / 2);
-
-                    for (let x = 0; x < canvas.width; x += 10) {
-                        const y = Math.sin(x * 0.008 + time + i * 1.5) * distortion +
-                                  Math.cos(x * 0.004 + time) * (distortion * 0.5) +
-                                  canvas.height / 2;
-                        ctx.lineTo(x, y);
-                    }
-
-                    ctx.lineTo(canvas.width, canvas.height);
-                    ctx.lineTo(0, canvas.height);
-
-                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                    gradient.addColorStop(0, `hsla(${(time * 20 + i * 40) % 360}, 60%, 80%, 0.25)`);
-                    gradient.addColorStop(1, `hsla(${(time * 20 + i * 40 + 60) % 360}, 50%, 90%, 0.05)`);
-
-                    ctx.fillStyle = gradient;
-                    ctx.fill();
-                }
-
-                for (let p = 0; p < particleCount; p++) {
-                    const px = (Math.sin(p * 99 + time * 0.5) * 0.5 + 0.5) * canvas.width;
-                    const py = (Math.cos(p * 33 + time * 0.3) * 0.5 + 0.5) * canvas.height;
-                    const radius = Math.sin(p + time) * 2 + 3;
-
-                    ctx.beginPath();
-                    ctx.arc(px, py, Math.abs(radius), 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(196, 192, 236, 0.6)`;
-                    ctx.fill();
-                }
-
-                requestAnimationFrame(render);
-            }
-            render();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initHero3DCanvas();
-            initGenerativeLabCanvas();
-            initCarousel();
-
-            // FILTER BUTTONS FUNCTIONALITY
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => {
-                        b.classList.remove('active', 'bg-charcoal-900', 'dark:bg-pearl-50', 'text-pearl-50', 'dark:text-charcoal-900');
-                        b.classList.add('border-charcoal-900/20', 'dark:border-white/20');
-                    });
-                    btn.classList.add('active', 'bg-charcoal-900', 'dark:bg-pearl-50', 'text-pearl-50', 'dark:text-charcoal-900');
-
-                    const category = btn.getAttribute('data-filter');
-
-                    projectCards.forEach(card => {
-                        const cardCat = card.getAttribute('data-category');
-                        if (category === 'all' || cardCat === category) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // MODAL LOGIC
-            const modal = document.getElementById('full-project-modal');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            const modalIframe = document.getElementById('modal-iframe');
-            const modalVideoContainer = document.getElementById('modal-video-container');
-            const modalScreenshotsGrid = document.getElementById('modal-screenshots-grid');
-
-            function openModal(id) {
-                const data = fullCaseStudyData[id];
-                if (!data) return;
-
-                document.getElementById('modal-title').textContent = data.title;
-                document.getElementById('modal-category').textContent = data.category;
-                document.getElementById('modal-year').textContent = data.year;
-                document.getElementById('modal-tagline').textContent = data.tagline;
-                document.getElementById('modal-role').textContent = data.role;
-                document.getElementById('modal-stack').textContent = data.stack;
-                document.getElementById('modal-context').textContent = data.context;
-                document.getElementById('modal-brief').textContent = data.brief;
-                document.getElementById('modal-execution').textContent = data.execution;
-                document.getElementById('modal-reflection').textContent = data.reflection;
-
-                if (data.video) {
-                    modalVideoContainer.style.display = 'block';
-                    modalIframe.src = data.video;
-                } else {
-                    modalVideoContainer.style.display = 'none';
-                    modalIframe.src = '';
-                }
-
-                modalScreenshotsGrid.innerHTML = '';
-                data.screenshots.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'rounded-xl overflow-hidden border border-charcoal-900/10 dark:border-white/10 cursor-pointer group';
-                    card.innerHTML = `
-                        <img src="${item.src}" alt="${item.caption}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform">
-                        <div class="p-3 bg-pearl-100 dark:bg-charcoal-800 text-xs font-mono">${item.caption}</div>
-                    `;
-                    card.addEventListener('click', () => {
-                        const lightbox = document.getElementById('lightbox-modal');
-                        document.getElementById('lightbox-img').src = item.src;
-                        document.getElementById('lightbox-caption').textContent = item.caption;
-                        lightbox.classList.remove('opacity-0', 'pointer-events-none');
-                    });
-                    modalScreenshotsGrid.appendChild(card);
-                });
-
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = 'hidden';
-            }
-
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.getAttribute('data-id');
-                    if (id) openModal(id);
-                });
-            });
-
-            closeModalBtn?.addEventListener('click', () => {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                modalIframe.src = '';
-                document.body.style.overflow = 'auto';
-            });
-
-            modal?.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('opacity-0', 'pointer-events-none');
-                    modalIframe.src = '';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            // Lightbox Modal
-            const lightbox = document.getElementById('lightbox-modal');
-            document.getElementById('lightbox-close')?.addEventListener('click', () => {
-                lightbox.classList.add('opacity-0', 'pointer-events-none');
-            });
-            lightbox?.addEventListener('click', (e) => {
-                if (e.target === lightbox) lightbox.classList.add('opacity-0', 'pointer-events-none');
-            });
-
-            // Theme Toggle
-            const themeBtn = document.getElementById('theme-toggle');
-            let isDark = false;
-            themeBtn?.addEventListener('click', () => {
-                isDark = !isDark;
-                document.body.classList.toggle('dark-theme', isDark);
-                document.documentElement.classList.toggle('dark', isDark);
-                document.getElementById('theme-icon').textContent = isDark ? '☀' : '✦';
-            });
-
-            // Copy Email
-            const copyBtn = document.getElementById('copy-email-btn');
-            copyBtn?.addEventListener('click', () => {
-                const email = 'atiqahkamaruzzaman@gmail.com';
-                const tempInput = document.createElement('input');
-                tempInput.value = email;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-
-                document.getElementById('copy-text').textContent = 'EMAIL COPIED!';
-                setTimeout(() => {
-                    document.getElementById('copy-text').textContent = 'COPY EMAIL ADDRESS';
-                }, 2000);
-            });
-        });
-    </script>
+const cards=[
+{id:'1',c:'vr',t:'Unity / VR',y:'2023 // FYP',n:'Handal VR: Hand Gestures',d:'Immersive VR environment built on Unity using Quest hand-tracking gestures.',i:'images/handalvr1.png',k:'Unity · Quest',cls:'big feat0',v:'videos/handalvr.mp4'},
+{id:'2',c:'ai',t:'Python / AI',y:'2026 // Degree',n:'The Color Sorting Helper',d:'Interactive AI learning tool for children built on PyQt5 and Teachable Machine.',i:'images/ai.png',k:'Python · TensorFlow',cls:'feat',v:'videos/ai.mp4'},
+{id:'11',c:'3d',t:'Short Film',y:'2026 // Degree',n:'Workshop 2 (Short Film)',d:'Collaborative short film focusing on storytelling, cinematography and post-production.',i:'images/pw.png',k:'Film production',cls:'dk'},
+{id:'3',c:'3d',t:'Blender',y:'2026 // Degree',n:'Computer Animation Project',d:'Custom 3D character modeling, rigging and animation cycle developed in Blender.',i:'images/animation1.png',k:'Blender 3D',cls:'wide'},
+{id:'4',c:'3d',t:'Video Tech',y:'2026 // Degree',n:'Personality Walk Video',d:'Assignment showcasing 9 distinct cinematic camera movement techniques.',i:'images/pw.png',k:'Video tech',cls:'wide dk'},
+{id:'5',c:'vr',t:'Unity / Art',y:'2022 // Diploma',n:'Guess The Nature',d:'Educational mobile game with custom vector artwork created in Adobe Illustrator.',i:'images/guessthenature.jpg',k:'Unity · Illustrator',cls:''},
+{id:'6',c:'mobile',t:'Android',y:'2022 // Diploma',n:'Residential College Info Portal',d:'Mobile application designed for college hostel residential management.',i:'images/mobile.jpg',k:'Android · Java',cls:'dk'},
+{id:'7',c:'web',t:'Web Dev',y:'2022 // Diploma',n:'Best Holiday Destination Portal',d:"Interactive web portal highlighting Malaysia's prime tourism locations.",i:'images/bh (1).jpg',k:'Frontend web',cls:''},
+{id:'8',c:'web',t:'PHP / MySQL',y:'2022 // Diploma',n:'Registration Vaccination Portal',d:'Web-based public health registration portal providing citizen appointment schedules.',i:'images/vaccine.jpg',k:'Full-stack web',cls:'wide'},
+{id:'9',c:'software',t:'Python',y:'2021 // Diploma',n:'Tuition Registration System',d:'Python GUI application for tuition centers to oversee student enrollment.',i:'images/ts (3).jpg',k:'Python desktop',cls:'wide dk'},
+{id:'10',c:'software',t:'Java',y:'2021 // Diploma',n:'Car Rental Management',d:'Java-based fleet management application handling vehicle availability and agreements.',i:'images/cr (1).jpg',k:'Java desktop',cls:''}];
+const jobs=[
+['2026','AY Global Ventures','Crew Event (Part-time) · Aug – Sep 2026','Managed event operations, guest experience and visual setup for corporate activation events in Klang, Selangor.','exp'],
+['2025 – 2027','Universiti Teknikal Malaysia Melaka (UTeM)','B.Sc. Computer Science (Interactive Media) · Sep 2025 – Sep 2027','Immersive VR, Blender 3D animation, digital audio and video camera techniques, AI image classifiers and interactive media UX.','edu'],
+['2024 – 2025','Bugz Studio Sdn Bhd','Software Tester (Full-time) · Jan 2024 – Sep 2025','Led QA testing, UAT, regression testing pipelines and UI consistency verification across software releases.','exp'],
+['2023','Politeknik Sultan Idris Shah','Diploma in Information Technology · GPA 3.99 · Mar 2021 – Jun 2023','Graduated with distinction; strong foundations across Java, Web, Mobile and Python development.','edu'],
+['2022','Cara Com My Sdn Bhd','Frontend Developer (Intern) · Jan – Jun 2022','Built responsive client web interfaces with HTML, CSS and JavaScript, turning designer mockups into code.','exp']];
+const $=s=>document.querySelector(s);
+// grid
+const grid=$('#grid');
+cards.forEach(p=>{const b=document.createElement('button');b.className='card '+(p.cls.includes('big')?'big':p.cls==='feat'?'feat':'');b.dataset.c=p.c;b.innerHTML=`<div class="im">${p.cls.includes('big')||p.cls==='feat'?'<em class="badge mono">★ Featured</em>':''}<img src="${p.i}" alt="${p.n}" loading="lazy">${p.v?`<video class="pv" src="${p.v}" muted loop playsinline preload="none"></video>`:''}</div><div class="bd"><div class="meta mono"><span>${p.t}</span><span>${p.y}</span></div><h3>${p.n}</h3><p>${p.d}</p><span class="tools">${p.k}</span></div>`;b.onclick=()=>openModal(p.id);const v=b.querySelector('video.pv');if(v){const im=v.parentNode,go=()=>{im.classList.add('playing');v.play().catch(()=>{})},st=()=>{im.classList.remove('playing');v.pause()};b.onmouseenter=go;b.onmouseleave=st;b.onfocus=go;b.onblur=st}grid.appendChild(b)});
+$('#filters').onclick=e=>{const f=e.target.dataset.f;if(!f)return;document.querySelectorAll('#filters button').forEach(b=>b.classList.toggle('on',b===e.target));grid.classList.toggle('flt',f!=='all');grid.querySelectorAll('.card').forEach(c=>c.style.display=(f==='all'||c.dataset.c===f)?'flex':'none')};
+// timeline
+const evH=j=>`<div class="ev reveal" tabindex="0" role="button"><div class="row"><div><span class="mono yr">${j[0]}${j[1]==='Universiti Teknikal Malaysia Melaka (UTeM'?'<span class="mono now">Current</span>':''}</span><h4>${j[1]}</h4><small>${j[2]}</small></div><span class="plus">+</span></div><p class="more">${j[3]}</p></div>`;
+$('#tl-edu').innerHTML=jobs.filter(j=>j[4]==='edu').map(evH).join('');$('#tl-exp').innerHTML=jobs.filter(j=>j[4]==='exp').map(evH).join('');
+document.querySelectorAll('.ev').forEach(e=>{const t=()=>e.classList.toggle('open');e.onclick=t;e.onkeydown=k=>{if(k.key==='Enter'||k.key===' '){k.preventDefault();t()}}});
+// modal
+const modal=$('#modal'),ifr=$('#m-if'),mp4=$('#m-mp4');
+function closeM(){modal.classList.remove('show');ifr.src='';mp4.pause();mp4.removeAttribute('src');document.body.style.overflow=''}
+function openModal(id){const d=fullCaseStudyData[id];if(!d)return;
+const set=(k,v)=>$('#'+k).textContent=v;set('m-title',d.title);set('m-cat',d.category);set('m-year',d.year);set('m-tag',d.tagline);set('m-role',d.role);set('m-stack',d.stack);set('m-ctx',d.context);set('m-brief',d.brief);set('m-exec',d.execution);set('m-ref',d.reflection);
+const isF=/\.(mp4|webm)$/i.test(d.video||'');$('#m-vid').style.display=d.video?'block':'none';ifr.style.display=isF?'none':'block';mp4.style.display=isF?'block':'none';ifr.src=isF?'':(d.video||'');mp4.src=isF?d.video:'';
+$('#shots').innerHTML='';d.screenshots.forEach(s=>{const f=document.createElement('figure');const isV=/\.(mp4|webm)$/i.test(s.src);f.innerHTML=(isV?`<video src="${s.src}" muted loop autoplay playsinline preload="metadata"></video><span class="play mono">▶ VIDEO</span>`:`<img src="${s.src}" alt="${s.caption}">`)+`<figcaption>${s.caption}</figcaption>`;f.onclick=()=>{const lv=$('#lb-v'),li=$('#lb-i');li.style.display=isV?'none':'block';lv.style.display=isV?'block':'none';if(isV){lv.src=s.src;lv.play().catch(()=>{})}else{lv.pause();li.src=s.src}$('#lb-c').textContent=s.caption;$('#lb').classList.add('show')};$('#shots').appendChild(f)});
+modal.classList.add('show');document.body.style.overflow='hidden'}
+$('#mx').onclick=closeM;modal.onclick=e=>{if(e.target===modal)closeM()};const closeLb=()=>{$('#lb').classList.remove('show');$('#lb-v').pause()};$('#lbx').onclick=closeLb;$('#lb').onclick=e=>{if(e.target.id==='lb')closeLb()};
+document.onkeydown=e=>{if(e.key==='Escape'){$('#lb').classList.contains('show')?closeLb():closeM()}};
+// nav, reveal, cursor
+$('#menu-btn').onclick=()=>$('#nav').classList.toggle('open');$('#nav').onclick=()=>$('#nav').classList.remove('open');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+const secs=[...document.querySelectorAll('section[id]')],links=[...document.querySelectorAll('#nav a')];
+addEventListener('scroll',()=>{let cur='hero';secs.forEach(s=>{if(scrollY>=s.offsetTop-220)cur=s.id});links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))},{passive:true});
+const cur=$('#cursor');addEventListener('mousemove',e=>{cur.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;cur.classList.toggle('h',!!e.target.closest('a,button,.pol,.ev,.card,input'))});
+// parallax
+const pars=document.querySelectorAll('[data-par]'),ph=$('#photo');let mx=0,my=0;
+addEventListener('mousemove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;pars.forEach(p=>{const k=+p.dataset.par;p.style.translate=`${-mx*k}px ${-my*k}px`});ph.style.transform=`translate(${mx*10}px,${my*10}px)`});
+// ribbon
+(function(){const cv=$('#ribbon');if(!cv||!window.THREE)return;const r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true});r.setPixelRatio(Math.min(devicePixelRatio,2));
+const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(40,1,.1,100);cam.position.z=7;
+const pts=[];for(let i=0;i<=120;i++){const a=i/120*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(a)*2.6+Math.cos(a*3)*.5,Math.sin(a)*1.7+Math.sin(a*2)*.5,Math.sin(a*3)*1.1))}
+const curve=new THREE.CatmullRomCurve3(pts,true),geo=new THREE.TubeGeometry(curve,260,.16,3,true);
+const pos=geo.attributes.position,col=[],c=new THREE.Color(),cs=['#C5B8FF','#F4C7E6','#A9DDF4'].map(h=>new THREE.Color(h));
+for(let i=0;i<pos.count;i++){const t=(Math.atan2(pos.getY(i),pos.getX(i))/Math.PI+1)/2*3,a=cs[Math.floor(t)%3],b=cs[(Math.floor(t)+1)%3];c.copy(a).lerp(b,t%1);col.push(c.r,c.g,c.b)}
+geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
+const ribbon=new THREE.Mesh(geo,new THREE.MeshPhysicalMaterial({vertexColors:true,transparent:true,opacity:.62,metalness:.2,roughness:.1,clearcoat:1,side:THREE.DoubleSide}));ribbon.scale.set(1,1,1);sc.add(ribbon);
+const orbs=[[2.9,-1.6,.6,.38],[-2.6,1.7,.4,.22],[2.2,2.0,0,.16]].map(([x,y,z,s])=>{const m=new THREE.Mesh(new THREE.SphereGeometry(s,32,32),new THREE.MeshPhysicalMaterial({color:0xdcd2ff,transparent:true,opacity:.55,roughness:.05,clearcoat:1}));m.position.set(x,y,z);sc.add(m);return m});
+sc.add(new THREE.AmbientLight(0xffffff,.9));const l=new THREE.PointLight(0xffffff,1.6,50);l.position.set(4,5,6);sc.add(l);const l2=new THREE.PointLight(0xC5B8FF,1.4,50);l2.position.set(-5,-3,4);sc.add(l2);
+function rs(){const w=cv.clientWidth,h=cv.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}rs();addEventListener('resize',rs);
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;let t=0;
+(function a(){requestAnimationFrame(a);t+=rm?0:.008;ribbon.rotation.z=t*.5+mx*.4;ribbon.rotation.y=Math.sin(t)*.5+mx*.6;ribbon.rotation.x=.4+my*.5+Math.cos(t*.7)*.2;orbs.forEach((o,i)=>o.position.y+=Math.sin(t*2+i)*.003);r.render(sc,cam)})()})();
+// lab
+(function(){const cv=$('#lab-canvas'),x=cv.getContext('2d');let sp=1,di=20,np=40,t=0,mxl=null;
+const rz=()=>{cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight};rz();addEventListener('resize',rz);
+cv.onmousemove=e=>{const b=cv.getBoundingClientRect();mxl=(e.clientX-b.left)/b.width*cv.width};cv.onmouseleave=()=>mxl=null;
+const bind=(id,v,fn,fmt)=>$('#'+id).oninput=e=>{fn(+e.target.value);$('#'+v).textContent=fmt?fmt(+e.target.value):e.target.value};
+bind('p-s','v-s',v=>sp=v,v=>v.toFixed(1));bind('p-d','v-d',v=>di=v);bind('p-p','v-p',v=>np=v);
+$('#reset').onclick=()=>{sp=1;di=20;np=40;[['p-s',1,'1.0','v-s'],['p-d',20,'20','v-d'],['p-p',40,'40','v-p']].forEach(([i,v,s,o])=>{$('#'+i).value=v;$('#'+o).textContent=s})};
+(function f(){t+=.01*sp;x.clearRect(0,0,cv.width,cv.height);
+for(let i=0;i<4;i++){x.beginPath();x.moveTo(0,cv.height/2);for(let px=0;px<=cv.width;px+=8){let bump=mxl!==null?Math.exp(-Math.pow((px-mxl)/90,2))*60:0;x.lineTo(px,Math.sin(px*.008+t+i*1.5)*di+Math.cos(px*.004+t)*di*.5+cv.height/2-bump*(1+i*.3))}
+x.lineTo(cv.width,cv.height);x.lineTo(0,cv.height);const g=x.createLinearGradient(0,0,cv.width,cv.height);g.addColorStop(0,`hsla(${(250+t*20+i*30)%360},80%,80%,.35)`);g.addColorStop(1,`hsla(${(310+t*20+i*30)%360},80%,85%,.08)`);x.fillStyle=g;x.fill()}
+for(let p=0;p<np;p++){x.beginPath();x.arc((Math.sin(p*99+t*.5)*.5+.5)*cv.width,(Math.cos(p*33+t*.3)*.5+.5)*cv.height,Math.abs(Math.sin(p+t)*2+3),0,6.3);x.fillStyle='rgba(247,241,232,.6)';x.fill()}
+requestAnimationFrame(f)})()})();
+// copy email
+$('#copy').onclick=()=>{const em='atiqahkamaruzzaman@gmail.com';(navigator.clipboard?navigator.clipboard.writeText(em):Promise.reject()).catch(()=>{const i=document.createElement('input');i.value=em;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove()});$('#copy-t').textContent='Email copied!';setTimeout(()=>$('#copy-t').textContent='Copy email address',2000)};
+</script>
 </body>
 </html>
